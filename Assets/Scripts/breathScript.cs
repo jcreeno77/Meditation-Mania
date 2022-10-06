@@ -6,7 +6,7 @@ public class breathScript : MonoBehaviour
 {
     float baseIncrement;
     float FOVincrement;
-    float baseCameraPOV = 70f;
+    //float baseCameraPOV = 70f;
     [SerializeField] GameObject cube;
     float cubeStartPoint;
 
@@ -15,7 +15,10 @@ public class breathScript : MonoBehaviour
     bool breathIn = true;
     [SerializeField] AudioClip breath1;
     [SerializeField] public AudioClip breath2;
+    [SerializeField] AudioClip badBreath1;
     AudioSource audioSrc;
+
+    [SerializeField] GameObject perfectExhaleImg;
 
     // Start is called before the first frame update
     void Start()
@@ -50,8 +53,15 @@ public class breathScript : MonoBehaviour
             FOVincrement -= Time.deltaTime * 2f;
         }
         
-        //Functionality involving
-        if (Input.GetKeyDown(KeyCode.Space) && FOVincrement < .5f)
+        //Functionality involving breathing in
+        if (Input.GetKeyDown(KeyCode.Space) && FOVincrement < .15f)
+        {
+            breathIn = true;
+            Debug.Log("Perfect Intake!");
+            audioSrc.clip = breath1;
+            audioSrc.Play();
+        }
+        else if (Input.GetKeyDown(KeyCode.Space) && FOVincrement < .5f)
         {
             breathIn = true;
             Debug.Log("Nice Intake!");
@@ -61,28 +71,38 @@ public class breathScript : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("BAD Intake!");
+            audioSrc.clip = badBreath1;
+            audioSrc.Play();
+            
         }
 
+        //Functionality for exhale
         if (Input.GetKeyUp(KeyCode.Space) && breathIn)
         {
-            audioSrc.clip = breath2;
-            audioSrc.Play();
 
             breathIn = false;
             if (FOVincrement > 3.51)
             {
+                audioSrc.clip = badBreath1;
+                audioSrc.Play();
                 Debug.Log("BREATH MISS");
             }
             else if (FOVincrement >= 3.3 && FOVincrement <= 3.51)
             {
+                audioSrc.clip = breath2;
+                audioSrc.Play();
                 Debug.Log("NICE BREATH");
             }
             else if (FOVincrement >= 2.5 && FOVincrement < 3.3)
             {
+                audioSrc.clip = breath2;
+                audioSrc.Play();
                 Debug.Log("OK BREATH");
             }
             else if (FOVincrement < 2.5)
             {
+                audioSrc.clip = badBreath1;
+                audioSrc.Play();
                 Debug.Log("BAD BREATH (Stinky!)");
             }
         }
@@ -96,5 +116,14 @@ public class breathScript : MonoBehaviour
         CircleFill.transform.localScale = new Vector3(1+ FOVincrement*.2f, 1+ FOVincrement*.2f, CircleFill.transform.localScale.z);
 
 
+    }
+    void VisualizePerfectInhale(GameObject perfInhale, float timeStart)
+    {
+        perfInhale.GetComponent<SpriteRenderer>().enabled = true;
+        timeStart += Time.deltaTime;
+        if (timeStart > 2f)
+        {
+            perfInhale.GetComponent<SpriteRenderer>().enabled = false;
+        }
     }
 }
