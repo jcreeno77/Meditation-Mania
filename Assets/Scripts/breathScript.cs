@@ -10,9 +10,11 @@ public class breathScript : MonoBehaviour
     [SerializeField] GameObject cube;
     float cubeStartPoint;
 
+    [SerializeField] GameObject CircleFill;
+
     bool breathIn = true;
-    public AudioClip breath1;
-    public AudioClip breath2;
+    [SerializeField] AudioClip breath1;
+    [SerializeField] public AudioClip breath2;
     AudioSource audioSrc;
 
     // Start is called before the first frame update
@@ -66,7 +68,6 @@ public class breathScript : MonoBehaviour
             audioSrc.clip = breath2;
             audioSrc.Play();
 
-
             breathIn = false;
             if (FOVincrement > 3.51)
             {
@@ -88,8 +89,11 @@ public class breathScript : MonoBehaviour
 
         FOVincrement = Mathf.Clamp(FOVincrement, 0, 8f);
         baseIncrement = Mathf.Clamp(baseIncrement, 1f, 50f);
+
+        //Set objects and components to change according to changing increment
         //GetComponent<Camera>().fieldOfView = baseCameraPOV + (FOVincrement*3);
         cube.transform.position = new Vector3(cube.transform.position.x, cubeStartPoint + FOVincrement * 2, cube.transform.position.z);
+        CircleFill.transform.localScale = new Vector3(1+ FOVincrement*.2f, 1+ FOVincrement*.2f, CircleFill.transform.localScale.z);
 
 
     }
