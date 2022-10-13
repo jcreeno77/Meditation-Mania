@@ -11,11 +11,17 @@ public class breathScript : MonoBehaviour
     float cubeStartPoint;
 
     [SerializeField] GameObject CircleFill;
+    [SerializeField] GameObject perfectExhale;
+    public bool breathReleased = false;
+    
 
     bool breathIn = true;
     [SerializeField] AudioClip breath1;
-    [SerializeField] public AudioClip breath2;
-    AudioSource audioSrc;
+    [SerializeField] AudioClip breath2;
+    [SerializeField] AudioClip perfectBreath;
+    [SerializeField] AudioSource audioSrc;
+    [SerializeField] AudioSource audioSrc2;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,7 +32,7 @@ public class breathScript : MonoBehaviour
         cubeStartPoint = cube.transform.position.y;
 
         //Declare components
-        audioSrc = GetComponent<AudioSource>();
+        //audioSrc = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -65,8 +71,7 @@ public class breathScript : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space) && breathIn)
         {
-            audioSrc.clip = breath2;
-            audioSrc.Play();
+            
 
             breathIn = false;
             if (FOVincrement > 3.51)
@@ -76,10 +81,20 @@ public class breathScript : MonoBehaviour
             else if (FOVincrement >= 3.3 && FOVincrement <= 3.51)
             {
                 Debug.Log("NICE BREATH");
+                audioSrc.clip = breath2;
+                audioSrc.Play();
+                audioSrc2.clip = perfectBreath;
+                audioSrc2.Play();
+
+                breathReleased = true;
+                perfectExhale.SetActive(true);
             }
             else if (FOVincrement >= 2.5 && FOVincrement < 3.3)
             {
                 Debug.Log("OK BREATH");
+                audioSrc.clip = breath2;
+                audioSrc.Play();
+                breathReleased = true;
             }
             else if (FOVincrement < 2.5)
             {
