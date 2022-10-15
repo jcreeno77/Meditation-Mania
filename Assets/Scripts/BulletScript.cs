@@ -19,7 +19,7 @@ public class BulletScript : MonoBehaviour
         
         if(decayTimer >= 4f)
         {
-            gameObject.SetActive(false);
+            Destroy(gameObject);
         }
     }
 }

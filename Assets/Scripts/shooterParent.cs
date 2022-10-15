@@ -5,6 +5,7 @@ using UnityEngine;
 public class shooterParent : MonoBehaviour
 {
     float rotateLoc;
+    [SerializeField] GameObject cubeTest;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +15,7 @@ public class shooterParent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+     /*   
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             rotateLoc += 50 * Time.deltaTime;
@@ -24,5 +25,16 @@ public class shooterParent : MonoBehaviour
             rotateLoc -= 50 * Time.deltaTime;
         }
         transform.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, rotateLoc);
+     */
+        //turn to face mouse
+        Vector3 lookPos = transform.position - cubeTest.transform.position;
+        float singleStep = 5f * Time.deltaTime;
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, lookPos, singleStep, 0.0f);
+        Debug.DrawRay(transform.position, newDirection, Color.red);
+        transform.rotation = Quaternion.LookRotation(newDirection);
+        //Debug.Log(transform.eulerAngles.x);
+        //transform.rotation = Quaternion.Euler(transform.eulerAngles.x, 90f, transform.eulerAngles.z);
+        //transform.LookAt(cubeTest.transform);
+
     }
 }
