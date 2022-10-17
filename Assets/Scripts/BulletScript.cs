@@ -22,4 +22,11 @@ public class BulletScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("COLLIDED");
+        Destroy(gameObject);
+        Destroy(collision.gameObject);
+    }
 }

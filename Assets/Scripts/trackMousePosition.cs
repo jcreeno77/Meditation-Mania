@@ -17,10 +17,24 @@ public class trackMousePosition : MonoBehaviour
     {
         Vector3 mousePos = Input.mousePosition;
         Ray ray = gameObject.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if(Physics.Raycast(ray, out hit))
+        {
+            if(hit.collider != null)
+            {
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Debug.Log("Hitting");
+                    hit.collider.gameObject.GetComponent<thoughtMovement>().clicked = true;
+                    //hit.collider.gameObject.GetComponent<thoughtMovement>().freezeTimer = 0;
+                }
+                
+            }
+        }
         //Debug.Log(mousePos.x);
         //Debug.Log(worldPos);
         float distanceToCamera = cubeTest.transform.position.z - transform.position.z;
-        Vector3 worldPos = ray.GetPoint(15f);
+        Vector3 worldPos = ray.GetPoint(distanceToCamera);
         
         cubeTest.transform.position = new Vector3(worldPos.x, worldPos.y,cubeTest.transform.position.z);
 

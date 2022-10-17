@@ -28,10 +28,16 @@ public class shooterParent : MonoBehaviour
      */
         //turn to face mouse
         Vector3 lookPos = transform.position - cubeTest.transform.position;
-        float singleStep = 5f * Time.deltaTime;
-        Vector3 newDirection = Vector3.RotateTowards(transform.forward, lookPos, singleStep, 0.0f);
-        Debug.DrawRay(transform.position, newDirection, Color.red);
-        transform.rotation = Quaternion.LookRotation(newDirection);
+        float singleStep = 5 * Time.deltaTime;
+        //Vector3 newDirection = Vector3.RotateTowards(transform.forward, lookPos, singleStep, 0.0f);
+        Quaternion rotateDirection = Quaternion.LookRotation(lookPos);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotateDirection, singleStep);
+        
+        
+        
+        
+        
+        
         //Debug.Log(transform.eulerAngles.x);
         //transform.rotation = Quaternion.Euler(transform.eulerAngles.x, 90f, transform.eulerAngles.z);
         //transform.LookAt(cubeTest.transform);
