@@ -6,10 +6,14 @@ public class breathScript : MonoBehaviour
 {
     float baseIncrement;
     float FOVincrement;
-    float baseCameraPOV = 60f;
+    float baseCameraPOV = 60f;   
 
     [SerializeField] GameObject CircleFill;
     [SerializeField] GameObject perfectExhale;
+    float rateOfChange_Inhale;
+    float rateOfChange_InhaleDelta;
+    float rateOfChange_Exhale;
+    float rateOfChange_ExhaleDelta;
     public bool breathReleased = false;
     
 
@@ -28,6 +32,10 @@ public class breathScript : MonoBehaviour
         //Declare starting Variables
         baseIncrement = 1f;
         FOVincrement = 0f;
+        rateOfChange_InhaleDelta = .1f;
+        rateOfChange_ExhaleDelta = .1f;
+        rateOfChange_Inhale =  10f;
+        rateOfChange_Exhale = 2f;
 
         //Declare components
         //audioSrc = GetComponent<AudioSource>();
@@ -36,6 +44,8 @@ public class breathScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        rateOfChange_Inhale += Time.deltaTime * rateOfChange_InhaleDelta;
+        rateOfChange_Exhale += Time.deltaTime * rateOfChange_ExhaleDelta;
         //Base function
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -44,14 +54,14 @@ public class breathScript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space))
         {
-            baseIncrement += Time.deltaTime * 10f;
+            baseIncrement += Time.deltaTime * rateOfChange_Inhale;
             FOVincrement = Mathf.Log(baseIncrement);
             
         }
         else
         {
             //baseIncrement -= Time.deltaTime * 15f;
-            FOVincrement -= Time.deltaTime * 2f;
+            FOVincrement -= Time.deltaTime * rateOfChange_Exhale;
         }
         
         //Functionality involving breath inhale
