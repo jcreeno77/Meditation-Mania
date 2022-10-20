@@ -6,7 +6,7 @@ public class breathScript : MonoBehaviour
 {
     float baseIncrement;
     float FOVincrement;
-    float baseCameraPOV = 70f;
+    float baseCameraPOV = 60f;
 
     [SerializeField] GameObject CircleFill;
     [SerializeField] GameObject perfectExhale;
@@ -113,8 +113,8 @@ public class breathScript : MonoBehaviour
         baseIncrement = Mathf.Clamp(baseIncrement, 1f, 50f);
 
         //Set objects and components to change according to changing increment
-        //GetComponent<Camera>().fieldOfView = baseCameraPOV + (FOVincrement*3);
-        CircleFill.transform.localScale = new Vector3(1+ FOVincrement*.2f, 1+ FOVincrement*.2f, CircleFill.transform.localScale.z);
+        GetComponent<Camera>().fieldOfView = baseCameraPOV + (FOVincrement*3);
+        CircleFill.transform.localScale = new Vector3(.5f+ FOVincrement*.3f, .5f+ FOVincrement*.3f, CircleFill.transform.localScale.z);
 
 
     }

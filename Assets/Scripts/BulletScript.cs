@@ -25,8 +25,14 @@ public class BulletScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("COLLIDED");
         Destroy(gameObject);
-        Destroy(collision.gameObject);
+        if(collision.gameObject.tag == "Thought")
+        {
+            if (collision.gameObject.GetComponent<thoughtMovement>().clicked == true)
+            {
+                Destroy(collision.gameObject);
+                
+            }
+        }
     }
 }

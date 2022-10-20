@@ -7,6 +7,7 @@ public class ThoughtSpawner : MonoBehaviour
     float timer = 0f;
     [SerializeField] GameObject thought;
     public float timeLimit = 5f;
+    public float rateOfTimeLimDecrease = .01f;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +17,8 @@ public class ThoughtSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timeLimit -= Time.deltaTime * rateOfTimeLimDecrease;
+        Debug.Log(timeLimit);
         timer += Time.deltaTime;
         if (timer > timeLimit){
             timer = 0f;

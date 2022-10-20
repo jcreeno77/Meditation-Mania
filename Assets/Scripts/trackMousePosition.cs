@@ -5,6 +5,8 @@ using UnityEngine;
 public class trackMousePosition : MonoBehaviour
 {
     [SerializeField] GameObject cubeTest;
+    [SerializeField] AudioSource audioSrc;
+    [SerializeField] AudioClip popClip;
     Plane plane = new Plane(Vector3.up, 0);
     // Start is called before the first frame update
     void Start()
@@ -22,10 +24,16 @@ public class trackMousePosition : MonoBehaviour
         {
             if(hit.collider != null)
             {
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetMouseButtonDown(0) && hit.collider.gameObject.tag == "Thought")
                 {
-                    Debug.Log("Hitting");
+                    
+                    if(hit.collider.gameObject.GetComponent<thoughtMovement>().cooldown == false && hit.collider.gameObject.GetComponent<thoughtMovement>().clicked == false)
+                    {
+                        audioSrc.clip = popClip;
+                        audioSrc.Play();
+                    }
                     hit.collider.gameObject.GetComponent<thoughtMovement>().clicked = true;
+
                     //hit.collider.gameObject.GetComponent<thoughtMovement>().freezeTimer = 0;
                 }
                 
