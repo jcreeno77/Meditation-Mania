@@ -6,9 +6,15 @@ public class breathScript : MonoBehaviour
 {
     float baseIncrement;
     float FOVincrement;
-    float baseCameraPOV = 60f;   
+    float baseCameraPOV = 60f;
+    float colorAlpha;
+    float colorAlphaIncrease;
 
     [SerializeField] GameObject CircleFill;
+    [SerializeField] GameObject CircleOutline;
+    [SerializeField] GameObject CircleFill2;
+    [SerializeField] GameObject CircleFill3;
+    [SerializeField] GameObject CircleFill4;
     [SerializeField] GameObject perfectExhale;
     float rateOfChange_Inhale;
     float rateOfChange_InhaleDelta;
@@ -19,9 +25,12 @@ public class breathScript : MonoBehaviour
 
     bool breathIn = true;
     [SerializeField] AudioClip breath1;
+    [SerializeField] AudioClip inhaleSound;
     [SerializeField] AudioClip breath2;
     [SerializeField] AudioClip badBreath;
     [SerializeField] AudioClip perfectBreath;
+    [SerializeField] AudioClip goodBreath;
+    [SerializeField] AudioClip introBrthCircSnd;
     [SerializeField] AudioSource audioSrc;
     [SerializeField] AudioSource audioSrc2;
 
@@ -32,10 +41,12 @@ public class breathScript : MonoBehaviour
         //Declare starting Variables
         baseIncrement = 1f;
         FOVincrement = 0f;
-        rateOfChange_InhaleDelta = .1f;
-        rateOfChange_ExhaleDelta = .1f;
-        rateOfChange_Inhale =  10f;
-        rateOfChange_Exhale = 2f;
+        rateOfChange_InhaleDelta = .05f;
+        rateOfChange_ExhaleDelta = .005f;
+        rateOfChange_Inhale =  8.5f;
+        rateOfChange_Exhale = .75f;
+        colorAlpha = 0f;
+        colorAlphaIncrease = 0f;
 
         //Declare components
         //audioSrc = GetComponent<AudioSource>();
@@ -71,6 +82,8 @@ public class breathScript : MonoBehaviour
             Debug.Log("Nice Intake!");
             audioSrc.clip = breath1;
             audioSrc.Play();
+            audioSrc2.clip = inhaleSound;
+            audioSrc2.Play();
         }
         else if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -109,6 +122,8 @@ public class breathScript : MonoBehaviour
                 Debug.Log("OK BREATH");
                 audioSrc.clip = breath2;
                 audioSrc.Play();
+                audioSrc2.clip = goodBreath;
+                audioSrc2.Play();
                 breathReleased = true;
             }
             else if (FOVincrement < 2.5)
@@ -125,7 +140,35 @@ public class breathScript : MonoBehaviour
         //Set objects and components to change according to changing increment
         GetComponent<Camera>().fieldOfView = baseCameraPOV + (FOVincrement*3);
         CircleFill.transform.localScale = new Vector3(.5f+ FOVincrement*.3f, .5f+ FOVincrement*.3f, CircleFill.transform.localScale.z);
+        CircleFill2.transform.localScale = new Vector3(.5f+ FOVincrement*.23f, .5f+ FOVincrement*.23f, CircleFill.transform.localScale.z);
+        CircleFill3.transform.localScale = new Vector3(.5f+ FOVincrement*.16f, .5f+ FOVincrement*.16f, CircleFill.transform.localScale.z);
+        CircleFill4.transform.localScale = new Vector3(.5f+ FOVincrement*.09f, .5f+ FOVincrement*.09f, CircleFill.transform.localScale.z);
 
 
+        //make breathCircle Appear
+        colorAlpha += colorAlphaIncrease * Time.deltaTime;
+        colorAlpha = Mathf.Clamp(colorAlpha, 0, .5f);
+        CircleFill.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,colorAlpha);
+        CircleFill2.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,colorAlpha);
+        CircleFill3.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,colorAlpha);
+        CircleFill4.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,colorAlpha);
+        CircleOutline.GetComponent<SpriteRenderer>().color = new Color(47f/255f,72f/255,188f/255,colorAlpha*2);
+        
+    }
+
+    private void OnEnable()
+    {
+        eventManager.onTimerEnd += breathAppear;
+    }
+    private void OnDisable()
+    {
+        eventManager.onTimerEnd -= breathAppear;
+    }
+
+    void breathAppear()
+    {
+        colorAlphaIncrease = 1/15f;
+        audioSrc2.clip = introBrthCircSnd;
+        audioSrc2.Play();
     }
 }
