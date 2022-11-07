@@ -158,11 +158,11 @@ public class breathScript : MonoBehaviour
 
     private void OnEnable()
     {
-        eventManager.onTimerEnd += breathAppear;
+        //eventManager.onTimerEnd += breathAppear;
     }
     private void OnDisable()
     {
-        eventManager.onTimerEnd -= breathAppear;
+        //eventManager.onTimerEnd -= breathAppear;
     }
 
     void breathAppear()
