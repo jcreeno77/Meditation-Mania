@@ -17,7 +17,8 @@ public class textController : MonoBehaviour
     [SerializeField] GameObject vidPlayer;
     [SerializeField] GameObject sequenceController;
     [SerializeField] AudioSource audsrc;
-    
+    [SerializeField] GameObject stillGameObject;
+
     float timer;
     float color1;
     float color2;
@@ -38,7 +39,7 @@ public class textController : MonoBehaviour
         color1 = 0f;
         color2 = 0f;
         color3 = 0f;
-        color4 = 0f;
+        color4 = 1f;
         alphaVideo = 0f;
         alphaBtn = 0f;
         audsrc = vidPlayer.GetComponent<AudioSource>();
@@ -76,9 +77,9 @@ public class textController : MonoBehaviour
             color3 -= Time.deltaTime;
         }
 
-        if (timer > 21 && !startGame)
+        if (timer > 19 && !startGame)
         {
-            color4 = 1f;
+            stillGameObject.SetActive(true);
             if (!audioPlayed)
             {
                 audsrc.Play();
@@ -90,9 +91,9 @@ public class textController : MonoBehaviour
 
         
 
-        if (timer > 23)
+        if (timer > 22)
         {
-            alphaVideo += Time.deltaTime;
+            alphaVideo += Time.deltaTime/2f;
             vidPlayer.GetComponent<VideoPlayer>().Play();
             playBtn.SetActive(true);
         }
@@ -116,7 +117,7 @@ public class textController : MonoBehaviour
         text1.GetComponent<Text>().color = new Color(1, 1, 1, color1);
         text2.GetComponent<Text>().color = new Color(1, 1, 1, color2);
         text3.GetComponent<Text>().color = new Color(1, 1, 1, color3);
-        text4.GetComponent<Text>().color = new Color(1, 1, 1, color4);
+        text4.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, color4);
         vidRenderer.GetComponent<RawImage>().color = new Color(1, 1, 1, alphaVideo);
         playBtn.GetComponent<Image>().color = new Color(1, 1, 1, alphaBtn);
 

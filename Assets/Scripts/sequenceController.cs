@@ -10,6 +10,20 @@ public class sequenceController : MonoBehaviour
     [SerializeField] AudioClip VO1a;
     [SerializeField] AudioClip VO2a;
     [SerializeField] AudioClip VO2b;
+    [SerializeField] AudioClip VO2c;
+    [SerializeField] AudioClip VO2d;
+    [SerializeField] AudioClip VO3;
+    [SerializeField] AudioClip VO4a;
+    [SerializeField] AudioClip VO4b;
+    [SerializeField] AudioClip VO4c;
+    [SerializeField] AudioClip VO5;
+    [SerializeField] AudioClip VO6;
+
+    bool playVO2a;
+    bool playVO2b;
+    bool playVO2c;
+
+    [SerializeField] AudioClip forestSound;
     
 
     [SerializeField] GameObject videoPlayer;
@@ -22,7 +36,7 @@ public class sequenceController : MonoBehaviour
     float timer;
     bool pauseTime;
     bool emotionSelected;
-    bool playVO2a;
+    
 
     // Start is called before the first frame update
     private void OnEnable()
@@ -32,7 +46,7 @@ public class sequenceController : MonoBehaviour
         audSrc = GetComponent<AudioSource>();
         audSrc.clip = VO1a;
         audSrc.Play();
-        videoPlayer.GetComponent<AudioSource>().volume -= .3f;
+        videoPlayer.GetComponent<AudioSource>().volume -= Mathf.Lerp(videoPlayer.GetComponent<AudioSource>().volume, 0.2f, .2f);
 
         //START SETTINGS
         //selBtn settings
@@ -53,6 +67,8 @@ public class sequenceController : MonoBehaviour
         selectBtn2.GetComponent<Button>().onClick.AddListener(EmotionSelected);
         selectBtn3.GetComponent<Button>().onClick.AddListener(EmotionSelected);
         playVO2a = false;
+        playVO2b = false;
+        playVO2c = false;
     }
 
     // Update is called once per frame
@@ -84,6 +100,18 @@ public class sequenceController : MonoBehaviour
             selectBtn3.SetActive(false);
             audSrc.PlayOneShot(VO2a);
             playVO2a = true;
+        }
+
+        if(timer > 9.5f && !playVO2b)
+        {
+            audSrc.PlayOneShot(VO2b);
+            playVO2b = true;
+        }
+
+        if(timer > 18 && !playVO2c)
+        {
+            audSrc.PlayOneShot(VO2c);
+            playVO2c = true;
         }
 
     }

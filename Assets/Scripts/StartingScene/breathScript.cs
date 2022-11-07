@@ -16,6 +16,7 @@ public class breathScript : MonoBehaviour
     [SerializeField] GameObject CircleFill3;
     [SerializeField] GameObject CircleFill4;
     [SerializeField] GameObject perfectExhale;
+
     float rateOfChange_Inhale;
     float rateOfChange_InhaleDelta;
     float rateOfChange_Exhale;
@@ -152,7 +153,7 @@ public class breathScript : MonoBehaviour
         CircleFill2.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,colorAlpha);
         CircleFill3.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,colorAlpha);
         CircleFill4.GetComponent<SpriteRenderer>().color = new Color(1f,1f,1f,colorAlpha);
-        CircleOutline.GetComponent<SpriteRenderer>().color = new Color(47f/255f,72f/255,188f/255,colorAlpha*2);
+        CircleOutline.GetComponent<SpriteRenderer>().color = new Color(47f/255f,72f/255,188f/255f,colorAlpha);
         
     }
 
