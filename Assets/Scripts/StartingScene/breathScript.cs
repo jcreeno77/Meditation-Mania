@@ -22,6 +22,9 @@ public class breathScript : MonoBehaviour
     float rateOfChange_Exhale;
     float rateOfChange_ExhaleDelta;
     public bool breathReleased = false;
+    public bool perfectBreathBegin;
+    public int perfectBreathCount;
+    public bool perfectBreathComplete;
     
 
     bool breathIn = true;
@@ -32,6 +35,7 @@ public class breathScript : MonoBehaviour
     [SerializeField] AudioClip perfectBreath;
     [SerializeField] AudioClip goodBreath;
     [SerializeField] AudioClip introBrthCircSnd;
+    [SerializeField] AudioClip perfectBrthTryAgain;
     [SerializeField] AudioSource audioSrc;
     [SerializeField] AudioSource audioSrc2;
 
@@ -48,23 +52,26 @@ public class breathScript : MonoBehaviour
         rateOfChange_Exhale = .75f;
         colorAlpha = 0f;
         colorAlphaIncrease = 0f;
-
+        perfectBreathCount = 0;
+        perfectBreathComplete = false;
         //Declare components
         //audioSrc = GetComponent<AudioSource>();
+        perfectBreathBegin = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        rateOfChange_Inhale += Time.deltaTime * rateOfChange_InhaleDelta;
-        rateOfChange_Exhale += Time.deltaTime * rateOfChange_ExhaleDelta;
+        //rateOfChange_Inhale += Time.deltaTime * rateOfChange_InhaleDelta;
+        //rateOfChange_Exhale += Time.deltaTime * rateOfChange_ExhaleDelta;
+
         //Base function
         if (Input.GetKeyDown(KeyCode.Space))
         {
             baseIncrement = Mathf.Pow(2.718281f, FOVincrement);
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && breathIn)
         {
             baseIncrement += Time.deltaTime * rateOfChange_Inhale;
             FOVincrement = Mathf.Log(baseIncrement);
@@ -82,7 +89,7 @@ public class breathScript : MonoBehaviour
             breathIn = true;
             Debug.Log("Nice Intake!");
             audioSrc.clip = breath1;
-            audioSrc.Play();
+            //audioSrc.Play();
             audioSrc2.clip = inhaleSound;
             audioSrc2.Play();
         }
@@ -101,18 +108,28 @@ public class breathScript : MonoBehaviour
             breathIn = false;
             if (FOVincrement > 3.51)
             {
-                Debug.Log("BREATH MISS");
-                audioSrc.clip = badBreath;
-                audioSrc.Play();
+                if (perfectBreathBegin)
+                {
+                    audioSrc.clip = perfectBrthTryAgain;
+                    audioSrc.Play();
+                }
+                else
+                {
+                    Debug.Log("BREATH MISS");
+                    audioSrc.clip = badBreath;
+                    //audioSrc.Play();
+                }
+
             }
             else if (FOVincrement >= 3.3 && FOVincrement <= 3.51)
             {
                 //Sound stuff for breath release
-                Debug.Log("NICE BREATH");
+                Debug.Log("Perfect BREATH");
                 audioSrc.clip = breath2;
                 audioSrc.Play();
                 audioSrc2.clip = perfectBreath;
                 audioSrc2.Play();
+                perfectBreathCount += 1;
 
                 //Action stuff for breath release
                 breathReleased = true;
@@ -120,19 +137,42 @@ public class breathScript : MonoBehaviour
             }
             else if (FOVincrement >= 2.5 && FOVincrement < 3.3)
             {
-                Debug.Log("OK BREATH");
-                audioSrc.clip = breath2;
-                audioSrc.Play();
-                audioSrc2.clip = goodBreath;
-                audioSrc2.Play();
-                breathReleased = true;
+                if (perfectBreathBegin)
+                {
+                    audioSrc.clip = perfectBrthTryAgain;
+                    audioSrc.Play();
+                }
+                else
+                {
+                    Debug.Log("OK BREATH");
+                    audioSrc.clip = breath2;
+                    audioSrc.Play();
+                    audioSrc2.clip = goodBreath;
+                    //audioSrc2.Play();
+                    breathReleased = true;
+                }
+                
             }
             else if (FOVincrement < 2.5)
             {
-                Debug.Log("BAD BREATH (Stinky!)");
-                audioSrc.clip = badBreath;
-                audioSrc.Play();
+                if (perfectBreathBegin)
+                {
+                    audioSrc.clip = perfectBrthTryAgain;
+                    audioSrc.Play();
+                }
+                else
+                {
+                    Debug.Log("BAD BREATH (Stinky!)");
+                    audioSrc.clip = badBreath;
+                    //audioSrc.Play();
+                }
+
             }
+        }
+
+        if(perfectBreathCount >= 3)
+        {
+            perfectBreathComplete = true;
         }
 
         FOVincrement = Mathf.Clamp(FOVincrement, 0, 8f);
@@ -159,11 +199,11 @@ public class breathScript : MonoBehaviour
 
     private void OnEnable()
     {
-        //eventManager.onTimerEnd += breathAppear;
+        eventManager.onTimerEnd += breathAppear;
     }
     private void OnDisable()
     {
-        //eventManager.onTimerEnd -= breathAppear;
+        eventManager.onTimerEnd -= breathAppear;
     }
 
     void breathAppear()

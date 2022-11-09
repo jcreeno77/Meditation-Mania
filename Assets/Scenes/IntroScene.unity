@@ -874,7 +874,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253697934}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.35, y: 0, z: 2.02}
+  m_LocalPosition: {x: -0.049999237, y: 0.37, z: 2.02}
   m_LocalScale: {x: 0.5837683, y: 0.5837683, z: 0.49310553}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2054,17 +2054,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45d30720776c694c95b004ce110c541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainCam: {fileID: 1820967795}
   VO1a: {fileID: 8300000, guid: f6465221b12823d489df9190114ed34e, type: 3}
   VO2a: {fileID: 8300000, guid: c1d28188b5c86164ea3932c2d0ed4361, type: 3}
   VO2b: {fileID: 8300000, guid: a3790c490b6173f4ca1ac4be22b63262, type: 3}
   VO2c: {fileID: 8300000, guid: 8dbf5380a7de6b84d81d67d2496e355d, type: 3}
-  VO2d: {fileID: 0}
-  VO3: {fileID: 0}
-  VO4a: {fileID: 0}
-  VO4b: {fileID: 0}
-  VO4c: {fileID: 0}
+  VO2d: {fileID: 8300000, guid: a8565faa4d89f8f45ad8b0958e496b52, type: 3}
+  VO3a: {fileID: 8300000, guid: a9e9595acfe997a4389112ca0def021c, type: 3}
+  VO3b: {fileID: 8300000, guid: bfff30f481ef64b4790d5183c3f03dca, type: 3}
+  VO4a: {fileID: 8300000, guid: 5c1caec3ffbb22544a85c042ac7ada06, type: 3}
+  VO4b: {fileID: 8300000, guid: b7dd1ad6755fdec4a91757b8e791c209, type: 3}
+  VO4c1: {fileID: 0}
+  VO4c2: {fileID: 0}
   VO5: {fileID: 0}
   VO6: {fileID: 0}
+  breathActivate: 0
+  end: 0
+  perfectBreathBegin: 0
   forestSound: {fileID: 0}
   videoPlayer: {fileID: 136047752}
   selectBtn1: {fileID: 645624135}
@@ -2416,7 +2422,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1329771186}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.35, y: 0, z: 2.157}
+  m_LocalPosition: {x: -0.05, y: 0.37, z: 2.157}
   m_LocalScale: {x: 0.75795364, y: 0.75795364, z: 0.6402388}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2618,7 +2624,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1444073982}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.35, y: 0, z: 2.2}
+  m_LocalPosition: {x: -0.049999237, y: 0.37, z: 2.2}
   m_LocalScale: {x: 1.5373502, y: 1.5373502, z: 1.1825771}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2904,6 +2910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bdbfa7673ce09d4ca996c099d784601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sequenceController: {fileID: 1003057173}
 --- !u!82 &1820967798
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3130,6 +3137,9 @@ MonoBehaviour:
   CircleFill4: {fileID: 1839847481}
   perfectExhale: {fileID: 0}
   breathReleased: 0
+  perfectBreathBegin: 0
+  perfectBreathCount: 0
+  perfectBreathComplete: 0
   breath1: {fileID: 8300000, guid: 4169cb57e9d7a1540849876474faee41, type: 3}
   inhaleSound: {fileID: 8300000, guid: cd40ab5af620aba4b82d7573ef9db31b, type: 3}
   breath2: {fileID: 8300000, guid: 6ec7fd64a06361746846fb521ef08ed7, type: 3}
@@ -3137,6 +3147,7 @@ MonoBehaviour:
   perfectBreath: {fileID: 8300000, guid: ef5fc8b396dbcf54fa40b1e560f18d42, type: 3}
   goodBreath: {fileID: 8300000, guid: c01e50d9f90298a45a62ef882e52d8f1, type: 3}
   introBrthCircSnd: {fileID: 8300000, guid: 5b2927b398c0a1f49a9365713d61530c, type: 3}
+  perfectBrthTryAgain: {fileID: 8300000, guid: 7c3d7b7ccbd572a4e8b825ca42b538b0, type: 3}
   audioSrc: {fileID: 1820967799}
   audioSrc2: {fileID: 1820967798}
 --- !u!81 &1820967802
@@ -3260,7 +3271,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839847481}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.35, y: 0, z: 1.61}
+  m_LocalPosition: {x: -0.049999237, y: 0.37, z: 1.61}
   m_LocalScale: {x: 0.42991987, y: 0.42991987, z: 0.36315066}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3365,7 +3376,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896567932}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 25.35, y: 0, z: 1.86}
+  m_LocalPosition: {x: -0.049999237, y: 0.37, z: 1.86}
   m_LocalScale: {x: 0.48573026, y: 0.48573026, z: 0.41029337}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3402,7 +3413,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit

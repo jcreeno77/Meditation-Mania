@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class eventManager : MonoBehaviour
 {
+    [SerializeField] GameObject sequenceController;
     public delegate void showBreath();
     public static event showBreath onTimerEnd;
-    float timer;
-    bool timerEnd;
+    bool activateBreath;
     // Start is called before the first frame update
     void Start()
     {
-        timer = 0f;
-        timerEnd = false;
+        activateBreath = false;
     }
+
 
     // Update is called once per frame
     void Update()
     {
-        timer += Time.deltaTime;
 
-        if (timer > 7.5 && !timerEnd)
+        if (sequenceController.GetComponent<sequenceController>().breathActivate)
         {
-            if (onTimerEnd != null)
+            if (onTimerEnd != null && !activateBreath)
             {
+                Debug.Log("HIT!");
                 onTimerEnd();
-                timerEnd = true;
+                activateBreath = true;
             }
         }
     }
