@@ -17,6 +17,7 @@ public class textController : MonoBehaviour
     [SerializeField] GameObject vidPlayer;
     [SerializeField] GameObject sequenceController;
     [SerializeField] AudioSource audsrc;
+    [SerializeField] AudioSource audsrc2;
     [SerializeField] GameObject stillGameObject;
 
     float timer;

@@ -7,7 +7,7 @@ public class breathScript : MonoBehaviour
     float baseIncrement;
     float FOVincrement;
     float baseCameraPOV = 60f;
-    float colorAlpha;
+    public float colorAlpha;
     float colorAlphaIncrease;
 
     [SerializeField] GameObject CircleFill;
@@ -87,7 +87,7 @@ public class breathScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && FOVincrement < .5f)
         {
             breathIn = true;
-            Debug.Log("Nice Intake!");
+            audioSrc.volume = .8f;
             audioSrc.clip = breath1;
             //audioSrc.Play();
             audioSrc2.clip = inhaleSound;
@@ -96,6 +96,7 @@ public class breathScript : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("BAD Intake!");
+            audioSrc.volume = .2f;
             audioSrc.clip = badBreath;
             audioSrc.Play();
         }
@@ -125,11 +126,16 @@ public class breathScript : MonoBehaviour
             {
                 //Sound stuff for breath release
                 Debug.Log("Perfect BREATH");
+                audioSrc.volume = .3f;
                 audioSrc.clip = breath2;
                 audioSrc.Play();
                 audioSrc2.clip = perfectBreath;
                 audioSrc2.Play();
-                perfectBreathCount += 1;
+                if (perfectBreathBegin)
+                {
+                    perfectBreathCount += 1;
+                }
+                    
 
                 //Action stuff for breath release
                 breathReleased = true;
@@ -139,12 +145,14 @@ public class breathScript : MonoBehaviour
             {
                 if (perfectBreathBegin)
                 {
+                    audioSrc.volume = 1f;
                     audioSrc.clip = perfectBrthTryAgain;
                     audioSrc.Play();
                 }
                 else
                 {
                     Debug.Log("OK BREATH");
+                    audioSrc.volume = .5f;
                     audioSrc.clip = breath2;
                     audioSrc.Play();
                     audioSrc2.clip = goodBreath;
@@ -209,7 +217,7 @@ public class breathScript : MonoBehaviour
     void breathAppear()
     {
         colorAlphaIncrease = 1/15f;
-        audioSrc2.clip = introBrthCircSnd;
-        audioSrc2.Play();
+        //audioSrc2.clip = introBrthCircSnd;
+        //audioSrc2.Play();
     }
 }
