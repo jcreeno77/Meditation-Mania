@@ -9,6 +9,7 @@ public class sequenceController : MonoBehaviour
     [SerializeField] GameObject mainCam;
 
     AudioSource audSrc;
+    
     [SerializeField] AudioClip VO1a;
     [SerializeField] AudioClip VO2a;
     [SerializeField] AudioClip VO2b;
@@ -23,6 +24,8 @@ public class sequenceController : MonoBehaviour
     [SerializeField] AudioClip VO5;
     [SerializeField] AudioClip VO6;
 
+    [SerializeField] AudioClip menuMusic;
+
     public bool breathActivate;
     public bool end;
 
@@ -36,6 +39,8 @@ public class sequenceController : MonoBehaviour
     bool playVO4b;
     bool playVO4c1;
     bool playVO4c2;
+
+    bool menumusicPlay;
 
     bool perfectBreathComplete;
     public bool perfectBreathBegin;
@@ -92,6 +97,7 @@ public class sequenceController : MonoBehaviour
         mainCam.GetComponent<breathScript>().enabled = false;
         end = false;
         gradeScreenAlpha = 0f;
+        menumusicPlay = false;
     }
 
     // Update is called once per frame
@@ -195,9 +201,17 @@ public class sequenceController : MonoBehaviour
             gradingScreen.SetActive(true);
             gradeScreenAlpha += Time.deltaTime;
             gradingScreen.GetComponent<Image>().color = new Color(1, 1, 1, gradeScreenAlpha);
+            if (!menumusicPlay)
+            {
+                videoPlayer.GetComponent<AudioSource>().clip = menuMusic;
+                videoPlayer.GetComponent<AudioSource>().Play();
+                menumusicPlay = true;
+            }
         }
         if (timer > 111 && end)
         {
+            
+            
             mainCam.GetComponent<breathScript>().enabled = false;
             gameObject.SetActive(false);
         }
