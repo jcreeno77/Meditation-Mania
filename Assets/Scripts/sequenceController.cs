@@ -9,7 +9,7 @@ public class sequenceController : MonoBehaviour
     [SerializeField] GameObject mainCam;
 
     AudioSource audSrc;
-    
+
     [SerializeField] AudioClip VO1a;
     [SerializeField] AudioClip VO2a;
     [SerializeField] AudioClip VO2b;
@@ -44,11 +44,16 @@ public class sequenceController : MonoBehaviour
 
     bool perfectBreathComplete;
     public bool perfectBreathBegin;
+    bool breathInOut = false;
 
     [SerializeField] AudioClip forestSound;
 
     [SerializeField] GameObject videoPlayer;
     [SerializeField] GameObject gradingScreen;
+    [SerializeField] GameObject perfectBreaths;
+    [SerializeField] GameObject goodBreaths;
+    [SerializeField] GameObject missedBreaths;
+    [SerializeField] GameObject badBreath;
     float gradeScreenAlpha;
 
     [SerializeField] GameObject selectBtn1;
@@ -59,7 +64,7 @@ public class sequenceController : MonoBehaviour
     float timer;
     bool pauseTime;
     bool emotionSelected;
-    
+
 
     // Start is called before the first frame update
     private void OnEnable()
@@ -71,25 +76,23 @@ public class sequenceController : MonoBehaviour
         audSrc.clip = VO1a;
         audSrc.Play();
         videoPlayer.GetComponent<AudioSource>().volume = Mathf.Lerp(videoPlayer.GetComponent<AudioSource>().volume, 0.2f, .01f);
+        
 
         //START SETTINGS
         //selBtn settings
         timer = 0f;
         pauseTime = false;
         emotionSelected = false;
-        selectBtn1.SetActive(true);
-        selectBtn2.SetActive(true);
-        selectBtn3.SetActive(true);
-        selectBtnAlpha = 0f;
+        breathInOut = false;
+
+        selectBtnAlpha = 1f;
         selectBtn1.GetComponent<Image>().color = new Color(1, 1, 1, selectBtnAlpha);
         selectBtn2.GetComponent<Image>().color = new Color(1, 1, 1, selectBtnAlpha);
         selectBtn3.GetComponent<Image>().color = new Color(1, 1, 1, selectBtnAlpha);
         selectBtn1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, selectBtnAlpha);
         selectBtn2.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, selectBtnAlpha);
         selectBtn3.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(1, 1, 1, selectBtnAlpha);
-        selectBtn1.GetComponent<Button>().onClick.AddListener(EmotionSelected);
-        selectBtn2.GetComponent<Button>().onClick.AddListener(EmotionSelected);
-        selectBtn3.GetComponent<Button>().onClick.AddListener(EmotionSelected);
+
         playVO2a = false;
         playVO2b = false;
         playVO2c = false;
@@ -107,22 +110,26 @@ public class sequenceController : MonoBehaviour
         selectBtn1.GetComponent<Image>().color = new Color(1, 1, 1, selectBtnAlpha);
         selectBtn2.GetComponent<Image>().color = new Color(1, 1, 1, selectBtnAlpha);
         selectBtn3.GetComponent<Image>().color = new Color(1, 1, 1, selectBtnAlpha);
-        selectBtn1.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(.1f, .1f, .1f, selectBtnAlpha);
-        selectBtn2.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(.1f, .1f, .1f, selectBtnAlpha);
-        selectBtn3.transform.GetChild(0).GetComponent<TextMeshProUGUI>().color = new Color(.1f, .1f, .1f, selectBtnAlpha);
+
 
 
         if (timer > 7 && !emotionSelected)
         {
             pauseTime = true;
             selectBtnAlpha += Time.deltaTime;
+            selectBtn1.SetActive(true);
+            selectBtn2.SetActive(true);
+            selectBtn3.SetActive(true);
+            selectBtn1.GetComponent<Button>().onClick.AddListener(EmotionSelected);
+            selectBtn2.GetComponent<Button>().onClick.AddListener(EmotionSelected);
+            selectBtn3.GetComponent<Button>().onClick.AddListener(EmotionSelected);
         }
         if (emotionSelected && timer > 7f)
         {
             selectBtnAlpha -= Time.deltaTime;
         }
 
-        if(timer > 8.2f && !playVO2a)
+        if (timer > 8.2f && !playVO2a)
         {
             selectBtn1.SetActive(false);
             selectBtn2.SetActive(false);
@@ -131,31 +138,50 @@ public class sequenceController : MonoBehaviour
             playVO2a = true;
         }
 
-        if(timer > 13f && !playVO2b)
+        if (timer > 13f && !playVO2b)
         {
             audSrc.PlayOneShot(VO2b);
             playVO2b = true;
         }
 
-        if(timer > 23 && !playVO2c)
+        if (timer > 23 && !playVO2c)
         {
             audSrc.PlayOneShot(VO2c);
             playVO2c = true;
         }
 
-        if(timer > 40 && !playVO2d)
+        if (timer > 40 && !playVO2d)
         {
             audSrc.PlayOneShot(VO2d);
             playVO2d = true;
         }
 
-        if(timer > 49 && !playVO3a)
+        if (timer > 49 && !playVO3a)
         {
             audSrc.PlayOneShot(VO3);
             playVO3a = true;
 
         }
-        if(timer > 52)
+        //BreathIn BreathOut
+        if (timer > 84 && !playVO4a)
+        {
+            audSrc.PlayOneShot(VO4a);
+            playVO4a = true;
+            pauseTime = true;
+        }
+        if (breathInOut)
+        {
+            if (Input.GetKeyDown(KeyCode.Space)){
+                
+            }
+            
+
+            
+
+        }
+
+
+        if (timer > 105)
         {
             //enables mainCam
             mainCam.GetComponent<breathScript>().enabled = true;
@@ -165,19 +191,14 @@ public class sequenceController : MonoBehaviour
             }
         }
 
-        if(timer > 84 && !playVO4a)
-        {
-            audSrc.PlayOneShot(VO4a);
-            playVO4a = true;
-        }
-        if(timer > 106 && !playVO4b)
+        if (timer > 106 && !playVO4b)
         {
             audSrc.PlayOneShot(VO4b);
             playVO4b = true;
             pauseTime = true;
-            
+
         }
-        if(timer > 106 && pauseTime && !perfectBreathComplete)
+        if (timer > 106 && pauseTime && !perfectBreathComplete)
         {
             mainCam.GetComponent<breathScript>().perfectBreathBegin = true;
             if (mainCam.GetComponent<breathScript>().perfectBreathComplete)
@@ -201,6 +222,11 @@ public class sequenceController : MonoBehaviour
             gradingScreen.SetActive(true);
             gradeScreenAlpha += Time.deltaTime;
             gradingScreen.GetComponent<Image>().color = new Color(1, 1, 1, gradeScreenAlpha);
+            perfectBreaths.GetComponent<TextMeshProUGUI>().color = new Color(29f / 255f, 104f / 255f, 168f / 255f, gradeScreenAlpha);
+            goodBreaths.GetComponent<TextMeshProUGUI>().color = new Color(29f / 255f, 104f / 255f, 168f / 255f, gradeScreenAlpha);
+            missedBreaths.GetComponent<TextMeshProUGUI>().color = new Color(29f / 255f, 104f / 255f, 168f / 255f, gradeScreenAlpha);
+            badBreath.GetComponent<TextMeshProUGUI>().color = new Color(29f / 255f, 104f / 255f, 168f / 255f, gradeScreenAlpha);
+
             if (!menumusicPlay)
             {
                 videoPlayer.GetComponent<AudioSource>().clip = menuMusic;
@@ -210,8 +236,8 @@ public class sequenceController : MonoBehaviour
         }
         if (timer > 111 && end)
         {
-            
-            
+
+
             mainCam.GetComponent<breathScript>().enabled = false;
             gameObject.SetActive(false);
         }

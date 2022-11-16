@@ -7,7 +7,7 @@ public class ThoughtSpawner : MonoBehaviour
     float timer = 0f;
     [SerializeField] GameObject thought;
     public float timeLimit = 5f;
-    public float rateOfTimeLimDecrease = .01f;
+    public float rateOfTimeLimDecrease = 1f;
     // Start is called before the first frame update
     void Start()
     {
