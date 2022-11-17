@@ -39,12 +39,13 @@ public class trackMousePosition : MonoBehaviour
                 
             }
         }
+        //FOR AIMING MECHANIC - Now obsolete
         //Debug.Log(mousePos.x);
         //Debug.Log(worldPos);
-        float distanceToCamera = cubeTest.transform.position.z - transform.position.z;
-        Vector3 worldPos = ray.GetPoint(distanceToCamera);
+        //float distanceToCamera = cubeTest.transform.position.z - transform.position.z;
+        //Vector3 worldPos = ray.GetPoint(distanceToCamera);
         
-        cubeTest.transform.position = new Vector3(worldPos.x, worldPos.y,cubeTest.transform.position.z);
+        //cubeTest.transform.position = new Vector3(worldPos.x, worldPos.y,cubeTest.transform.position.z);
 
 
     }

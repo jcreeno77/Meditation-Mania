@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Thought
+  - center
+  - seqController
+  - blastRing
   layers:
   - Default
   - TransparentFX

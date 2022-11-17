@@ -27,6 +27,10 @@ public class breathScript : MonoBehaviour
     public int perfectBreathCount;
     public bool perfectBreathComplete;
 
+    public bool blastBegin;
+    public bool blastSequenceComplete;
+    [SerializeField] GameObject blastCircle;
+
 
     bool breathIn = true;
     [SerializeField] AudioClip breath1;
@@ -142,6 +146,17 @@ public class breathScript : MonoBehaviour
 
                 performanceCollector.GetComponent<performanceCollector>().perfectBreaths += 1;
 
+                if(blastBegin)
+                {
+                    Instantiate(blastCircle);
+                    blastBegin = false;
+                    blastSequenceComplete = true;
+                }
+                if (blastSequenceComplete)
+                {
+                    Instantiate(blastCircle);
+
+                }
 
                 //Action stuff for breath release
                 breathReleased = true;

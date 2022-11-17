@@ -6,20 +6,26 @@ public class thoughtMovement : MonoBehaviour
 {
     [SerializeField] GameObject centerObject;
     [SerializeField] GameObject placeHoldCube;
+    [SerializeField] GameObject sequenceController;
     [SerializeField] float baseScale;
     [SerializeField] float clickedScale;
     GameObject holdCube;
     public bool clicked;
     public bool cooldown = false;
+
+    public bool thoughtInSequence = false;
+
     float cooldownTimer;
-    public float freezeTimer;
+    private float freezeTimer;
     Vector3 mainDirection;
     bool inside = false;
+    bool firstClick = false;
     Animator anim;
     // Start is called before the first frame update
     void Start()
     {
-        centerObject = GameObject.Find("CenterShooter");
+        centerObject = GameObject.FindGameObjectWithTag("center");
+        sequenceController = GameObject.FindGameObjectWithTag("seqController");
         clicked = false;
         anim = GetComponent<Animator>();
     }
@@ -27,6 +33,10 @@ public class thoughtMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (thoughtInSequence)
+        {
+            freezeTimer = 0f;
+        }
         //CENTER FUNCTIONALITY
         float distanceToCenter = Vector3.Distance(transform.position, centerObject.transform.position);
         //CHECKS IF IN CENTER
@@ -67,6 +77,7 @@ public class thoughtMovement : MonoBehaviour
             //Click functionality
             if (clicked)
             {
+                Debug.Log("clicked");
                 if (!cooldown)
                 {
                     //Put all clicked code here
@@ -89,6 +100,9 @@ public class thoughtMovement : MonoBehaviour
                     
                 }
 
+                //IF THOUGHT IS IN INTRO SEQUENCE
+                
+
             }
             else
             {
@@ -103,9 +117,22 @@ public class thoughtMovement : MonoBehaviour
             }
 
         }
+        if (thoughtInSequence && clicked && !firstClick)
+        {
+            sequenceController.GetComponent<sequenceController>().thoughtSequenceClicked = true;
+            //Destroy animation
+            firstClick = true;
+        }
 
         transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
     }
 
-        
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "blastRing")
+        {
+            Destroy(gameObject);
+        }
+    }
+
 }

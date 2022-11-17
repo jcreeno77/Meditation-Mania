@@ -23,11 +23,19 @@ public class sequenceController : MonoBehaviour
     [SerializeField] AudioClip VO4c2;
     [SerializeField] AudioClip VO5;
     [SerializeField] AudioClip VO6;
+    [SerializeField] AudioClip VO7a;
+    [SerializeField] AudioClip VO7b;
+    [SerializeField] AudioClip VO8a;
+    [SerializeField] AudioClip VO8b;
+    [SerializeField] AudioClip VO8c;
 
     [SerializeField] AudioClip menuMusic;
 
     public bool breathActivate;
     public bool end;
+    public bool thoughtSequenceComplete;
+    public bool blastSequenceComplete;
+    bool blastSequenceBegin;
 
     bool playVO2a;
     bool playVO2b;
@@ -39,6 +47,13 @@ public class sequenceController : MonoBehaviour
     bool playVO4b;
     bool playVO4c1;
     bool playVO4c2;
+    bool playVO5;
+    bool playVO6;
+    //bool playVO7a;
+    //bool playVO7b;
+    bool playVO8a;
+    bool playVO8b;
+    bool playVO8c;
 
     bool menumusicPlay;
 
@@ -59,9 +74,15 @@ public class sequenceController : MonoBehaviour
     [SerializeField] GameObject selectBtn1;
     [SerializeField] GameObject selectBtn2;
     [SerializeField] GameObject selectBtn3;
+    [SerializeField] GameObject thoughtSpawner;
+    [SerializeField] GameObject thoughtObject;
     float selectBtnAlpha;
 
     float timer;
+    float thoughtSequencetimer = 0;
+    float blastSequencetimer = 0;
+    public bool thoughtSequenceClicked = false;
+    int thoughtSequenceTimesClicked = 0;
     bool pauseTime;
     bool emotionSelected;
 
@@ -167,19 +188,8 @@ public class sequenceController : MonoBehaviour
         {
             audSrc.PlayOneShot(VO4a);
             playVO4a = true;
-            pauseTime = true;
+            //pauseTime = true;
         }
-        if (breathInOut)
-        {
-            if (Input.GetKeyDown(KeyCode.Space)){
-                
-            }
-            
-
-            
-
-        }
-
 
         if (timer > 105)
         {
@@ -206,10 +216,91 @@ public class sequenceController : MonoBehaviour
                 perfectBreathComplete = true;
                 pauseTime = false;
                 mainCam.GetComponent<breathScript>().perfectBreathBegin = false;
-                end = true;
+                //end = true;
             }
         }
 
+        if (timer > 108 && !playVO5)
+        {
+            audSrc.PlayOneShot(VO5);
+            playVO5 = true;
+
+        }
+        
+        if (timer > 119 && !playVO6)
+        {
+            audSrc.PlayOneShot(VO6);
+            playVO6 = true;
+            pauseTime = true;
+            GameObject tempThought = Instantiate(thoughtObject);
+            tempThought.transform.position = new Vector3(19f, 3f, 0f);
+            tempThought.GetComponent<thoughtMovement>().thoughtInSequence = true;
+        }
+        //THOUGHT SEQUENCE CODE
+        if (timer > 119 && pauseTime && !thoughtSequenceComplete)
+        {
+            thoughtSequencetimer += Time.deltaTime;
+
+            if(thoughtSequencetimer > 8f)
+            {
+                thoughtSequencetimer = 0f;
+                audSrc.PlayOneShot(VO7b);
+            }
+            if (thoughtSequenceClicked)
+            {
+                thoughtSequenceClicked = false;
+                thoughtSequencetimer = 0f;
+                thoughtSequenceTimesClicked++;
+                if(thoughtSequenceTimesClicked == 3)
+                {
+                    thoughtSequenceComplete = true;
+                    pauseTime = false;
+                }
+                else
+                {
+                    audSrc.PlayOneShot(VO7a);
+                    GameObject tempThought = Instantiate(thoughtObject);
+                    tempThought.transform.position = new Vector3(19f, Random.Range(-2f, 2f), 0f);
+                    tempThought.GetComponent<thoughtMovement>().thoughtInSequence = true;
+                }
+                
+            }
+
+        }
+
+        if(timer > 121 && !playVO8a)
+        {
+            playVO8a = true;
+            audSrc.PlayOneShot(VO8a);
+            
+        }
+
+        if(timer > 138 && !playVO8b)
+        {
+            playVO8b = true;
+            audSrc.PlayOneShot(VO8b);
+            pauseTime = true;
+            mainCam.GetComponent<breathScript>().blastBegin = true;
+            blastSequenceBegin = true;
+        }
+
+        if(pauseTime && blastSequenceBegin)
+        {
+            blastSequencetimer += Time.deltaTime;
+            if(blastSequencetimer > 6)
+            {
+                audSrc.PlayOneShot(VO8b);
+                blastSequencetimer = 0;
+            }
+            if (mainCam.GetComponent<breathScript>().blastSequenceComplete)
+            {
+                blastSequenceBegin = false;
+                pauseTime = false;
+            }
+        }
+
+
+        
         if (end)
         {
             Debug.Log("Going");
@@ -236,8 +327,6 @@ public class sequenceController : MonoBehaviour
         }
         if (timer > 111 && end)
         {
-
-
             mainCam.GetComponent<breathScript>().enabled = false;
             gameObject.SetActive(false);
         }
