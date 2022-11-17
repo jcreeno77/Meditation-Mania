@@ -37,6 +37,7 @@ public class breathScript : MonoBehaviour
     public bool blastBegin;
     public bool blastSequenceComplete;
     [SerializeField] GameObject blastCircle;
+    public int thoughtsInside;
 
 
     bool breathIn = true;
@@ -46,6 +47,7 @@ public class breathScript : MonoBehaviour
     [SerializeField] AudioClip badBreath;
     [SerializeField] AudioClip perfectBreath;
     [SerializeField] AudioClip goodBreath;
+    [SerializeField] AudioClip missBreath;
     [SerializeField] AudioClip introBrthCircSnd;
     [SerializeField] AudioClip perfectBrthTryAgain;
     [SerializeField] AudioSource audioSrc;
@@ -56,6 +58,7 @@ public class breathScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        thoughtsInside = 0;
         gameStart = false;
         //Declare starting Variables
         baseIncrement = 1f;
@@ -136,8 +139,10 @@ public class breathScript : MonoBehaviour
                     Debug.Log("BREATH MISS");
                     audioSrc.clip = badBreath;
                     audioSrc.Play();
+                    Instantiate(missText);
                 }
                 performanceCollector.GetComponent<performanceCollector>().missedBreaths += 1;
+                performanceCollector.GetComponent<performanceCollector>().currentCombo = 1;
 
             }
             else if (FOVincrement >= 3.37 && FOVincrement <= 3.45)
@@ -156,6 +161,7 @@ public class breathScript : MonoBehaviour
                 }
 
                 performanceCollector.GetComponent<performanceCollector>().perfectBreaths += 1;
+                performanceCollector.GetComponent<performanceCollector>().currentCombo *= 2;
 
                 if (blastSequenceComplete)
                 {
@@ -182,6 +188,7 @@ public class breathScript : MonoBehaviour
                     audioSrc.clip = perfectBrthTryAgain;
                     audioSrc.Play();
                     sequenceController.GetComponent<AudioSource>().Stop();
+
                 }
                 else
                 {
@@ -190,8 +197,14 @@ public class breathScript : MonoBehaviour
                     audioSrc.clip = breath2;
                     audioSrc.Play();
                     audioSrc2.clip = goodBreath;
-                    //audioSrc2.Play();
+                    audioSrc2.Play();
                     breathReleased = true;
+                    Instantiate(okayText);
+                    if (blastSequenceComplete)
+                    {
+                        Instantiate(blastCircle);
+                    }
+                    
                 }
                 performanceCollector.GetComponent<performanceCollector>().goodBreaths += 1;
 
@@ -208,10 +221,12 @@ public class breathScript : MonoBehaviour
                 {
                     Debug.Log("BAD BREATH (Stinky!)");
                     audioSrc.clip = badBreath;
-                    //audioSrc.Play();
+                    audioSrc.Play();
+                    Instantiate(badText);
+                    
                 }
                 performanceCollector.GetComponent<performanceCollector>().missedBreaths += 1;
-
+                performanceCollector.GetComponent<performanceCollector>().currentCombo = 1;
             }
         }
 
@@ -239,6 +254,15 @@ public class breathScript : MonoBehaviour
         CircleFill3.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, colorAlpha);
         CircleFill4.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, colorAlpha);
         CircleOutline.GetComponent<SpriteRenderer>().color = new Color(47f / 255f, 72f / 255, 188f / 255f, colorAlpha);
+
+        if (performanceCollector.GetComponent<performanceCollector>().endGame)
+        {
+            CircleFill.SetActive(false);
+            CircleFill2.SetActive(false);
+            CircleFill3.SetActive(false);
+            CircleFill4.SetActive(false);
+            CircleOutline.SetActive(false);
+        }
 
     }
 

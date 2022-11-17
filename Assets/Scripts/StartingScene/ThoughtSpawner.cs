@@ -9,11 +9,6 @@ public class ThoughtSpawner : MonoBehaviour
     private float timeLimit = 6f;
     private  float rateOfTimeLimDecrease = .03f;
     public float spawnSequence;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()

@@ -11,7 +11,8 @@ public class judgementsScript : MonoBehaviour
         timer = 0f;
         float xVal = Random.Range(-5, 5);
         float yVal = Random.Range(5.5f, 7);
-        transform.localScale = new Vector3(transform.localScale.x * .3f, transform.localScale.y * .3f, transform.localScale.z * .3f);
+        float scale = .5f;
+        transform.localScale = new Vector3(transform.localScale.x * scale, transform.localScale.y * scale, transform.localScale.z * scale);
 
         transform.position = new Vector3(xVal, yVal, 0);
     }

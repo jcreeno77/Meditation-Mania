@@ -7,6 +7,7 @@ public class thoughtMovement : MonoBehaviour
     [SerializeField] GameObject centerObject;
     [SerializeField] GameObject placeHoldCube;
     [SerializeField] GameObject sequenceController;
+    GameObject performanceCollector;
     [SerializeField] float baseScale;
     [SerializeField] float clickedScale;
 
@@ -33,10 +34,12 @@ public class thoughtMovement : MonoBehaviour
     private Color transitionVal = new Color(155f/255f,114f / 255f, 242f / 255f);
 
     private float deathTimer;
+    bool triggerInside = false;
     
     // Start is called before the first frame update
     void Start()
     {
+        performanceCollector = GameObject.FindGameObjectWithTag("perfCollector");
         deathTimer = 0;
         centerObject = GameObject.FindGameObjectWithTag("center");
         sequenceController = GameObject.FindGameObjectWithTag("seqController");
@@ -64,6 +67,10 @@ public class thoughtMovement : MonoBehaviour
         {
             freezeTimer = 0f;
         }
+        if (performanceCollector.GetComponent<performanceCollector>().endGame)
+        {
+            Destroy(gameObject);
+        }
         //CENTER FUNCTIONALITY
         float distanceToCenter = Vector3.Distance(transform.position, centerObject.transform.position);
         //CHECKS IF IN CENTER
@@ -81,6 +88,14 @@ public class thoughtMovement : MonoBehaviour
             mainDirection = transform.position - holdCube.transform.position;
             transform.position -= mainDirection * Time.deltaTime * .5f;
 
+            if (!triggerInside)
+            {
+                performanceCollector.GetComponent<performanceCollector>().currentCombo = 1;
+                performanceCollector.GetComponent<performanceCollector>().thoughtsInside++;
+                triggerInside = true;
+            }
+            
+
 
         }
         else
@@ -90,7 +105,7 @@ public class thoughtMovement : MonoBehaviour
             if (cooldown)
             {
                 cooldownTimer += Time.deltaTime;
-                if (cooldownTimer > 3f)
+                if (cooldownTimer > 4f)
                 {
                     cooldown = false;
                     anim.SetBool("ReAnim", true);
@@ -106,40 +121,31 @@ public class thoughtMovement : MonoBehaviour
                     GetComponent<AudioSource>().PlayOneShot(mainClip);
                     GetComponent<AudioSource>().PlayOneShot(frozenSound);
                     thoughtPlayed = true;
+                    //Increase noted thought
+                    performanceCollector.GetComponent<performanceCollector>().releasedThoughts += 1;
+                    freezeTimer = 0;
                 }
-                if (!cooldown)
-                {
-                    //Put all clicked code here
-                    //float currentScale = Mathf.Lerp(transform.localScale.x, clickedScale, Time.deltaTime*2);
-                    //transform.localScale = new Vector3(currentScale, currentScale, currentScale);
-                    //TRANSITION COLOR
-                    float rOfRGB = GetComponent<SpriteRenderer>().color.r;
-                    float rOfClickedRGB = transitionVal.r;
-                    rOfRGB = Mathf.Lerp(rOfRGB, rOfClickedRGB, Time.deltaTime);
-                    float gOfRGB = GetComponent<SpriteRenderer>().color.g;
-                    float gOfClickedRGB = transitionVal.g;
-                    gOfRGB = Mathf.Lerp(gOfRGB, gOfClickedRGB, Time.deltaTime);
-                    float bOfRGB = GetComponent<SpriteRenderer>().color.b;
-                    float bOfClickedRGB = transitionVal.b;
-                    bOfRGB = Mathf.Lerp(bOfRGB, bOfClickedRGB, Time.deltaTime);
-                    GetComponent<SpriteRenderer>().color = new Color(rOfRGB, gOfRGB, bOfRGB);
+                cooldown = true;
+                //Put all clicked code here
+                //TRANSITION COLOR
+                float rOfRGB = GetComponent<SpriteRenderer>().color.r;
+                float rOfClickedRGB = transitionVal.r;
+                rOfRGB = Mathf.Lerp(rOfRGB, rOfClickedRGB, Time.deltaTime);
+                float gOfRGB = GetComponent<SpriteRenderer>().color.g;
+                float gOfClickedRGB = transitionVal.g;
+                gOfRGB = Mathf.Lerp(gOfRGB, gOfClickedRGB, Time.deltaTime);
+                float bOfRGB = GetComponent<SpriteRenderer>().color.b;
+                float bOfClickedRGB = transitionVal.b;
+                bOfRGB = Mathf.Lerp(bOfRGB, bOfClickedRGB, Time.deltaTime);
+                GetComponent<SpriteRenderer>().color = new Color(rOfRGB, gOfRGB, bOfRGB);
+                    
 
-
-                    freezeTimer += Time.deltaTime;
-                    anim.SetBool("isClicked", true);
-                    anim.SetBool("ReAnim", false);
-                    if (freezeTimer > 3.5f)
-                    {
-                        clicked = false;
-                        cooldown = true;
-                        
-                        
-                    }
-                }
-                else
+                freezeTimer += Time.deltaTime;
+                anim.SetBool("isClicked", true);
+                anim.SetBool("ReAnim", false);
+                if (freezeTimer > 3.5f)
                 {
                     clicked = false;
-                    
                 }
             }
             else
@@ -168,14 +174,16 @@ public class thoughtMovement : MonoBehaviour
             }
 
         }
+        //For first sequence action
         if (thoughtInSequence && clicked && !firstClick)
         {
             sequenceController.GetComponent<sequenceController>().thoughtSequenceClicked = true;
             //Destroy animation
             firstClick = true;
         }
-
+        //keep in front of middle Circle
         transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
+        
         //kill sequence
         if (anim.GetBool("isDead"))
         {
@@ -187,13 +195,15 @@ public class thoughtMovement : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "blastRing")
         {
             if (anim.GetBool("isClicked"))
             {
                 anim.SetBool("isDead", true);
+                performanceCollector.GetComponent<performanceCollector>().releasedThoughts += 1;
+                performanceCollector.GetComponent<performanceCollector>().totalScore += performanceCollector.GetComponent<performanceCollector>().currentCombo;
             }
         }
     }

@@ -99,7 +99,6 @@ public class sequenceController : MonoBehaviour
         audSrc.clip = VO1a;
         audSrc.Play();
         videoPlayer.GetComponent<AudioSource>().volume = Mathf.Lerp(videoPlayer.GetComponent<AudioSource>().volume, 0.2f, .01f);
-        
 
         //START SETTINGS
         //selBtn settings
@@ -130,12 +129,9 @@ public class sequenceController : MonoBehaviour
     void Update()
     {
         if (!pauseTime) timer += Time.deltaTime;
-        Debug.Log(timer);
         selectBtn1.GetComponent<Image>().color = new Color(1, 1, 1, selectBtnAlpha);
         selectBtn2.GetComponent<Image>().color = new Color(1, 1, 1, selectBtnAlpha);
         selectBtn3.GetComponent<Image>().color = new Color(1, 1, 1, selectBtnAlpha);
-
-
 
         if (timer > 5 && !emotionSelected)
         {
