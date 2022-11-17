@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image))]
 public class imageAnimateScript : MonoBehaviour
 {
-    public float duration;
+    private float fps;
 
     [SerializeField] private Sprite[] sprites;
 
@@ -18,7 +18,7 @@ public class imageAnimateScript : MonoBehaviour
     private void OnEnable()
     {
         image = GetComponent<Image>();
-        duration = 7f;
+        fps = 45f;
         index = 0;
         timer = 0;
     }
@@ -27,7 +27,7 @@ public class imageAnimateScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((timer += Time.deltaTime) >= (duration / sprites.Length))
+        if ((timer += Time.deltaTime) >= (1/fps))
         {
             timer = 0;
             image.sprite = sprites[index];

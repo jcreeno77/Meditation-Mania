@@ -30,6 +30,9 @@ public class performanceCollector : MonoBehaviour
     [SerializeField] GameObject badBreath;
     [SerializeField] GameObject missedBreath;
 
+    public int currentCombo;
+    public int currentTotalScore;
+
     // Start is called before the first frame update
     private void OnEnable()
     {
@@ -60,6 +63,11 @@ public class performanceCollector : MonoBehaviour
         perfBreath.GetComponent<TextMeshProUGUI>().text = perfectBreaths.ToString();
         goodBreath.GetComponent<TextMeshProUGUI>().text = goodBreaths.ToString();
         missedBreath.GetComponent<TextMeshProUGUI>().text = missedBreaths.ToString();
+
+        if (mainCam.GetComponent<breathScript>().gameStart)
+        {
+
+        }
     }
 
 }

@@ -12,6 +12,9 @@ public class thoughtMovement : MonoBehaviour
 
     [SerializeField] AudioClip[] thoughtClips;
     AudioClip mainClip;
+
+    [SerializeField] AudioClip[] frozenSounds;
+    private AudioClip frozenSound;
     bool thoughtPlayed = false;
     
     GameObject holdCube;
@@ -28,10 +31,13 @@ public class thoughtMovement : MonoBehaviour
     Animator anim;
     private Color mainVal;
     private Color transitionVal = new Color(155f/255f,114f / 255f, 242f / 255f);
+
+    private float deathTimer;
     
     // Start is called before the first frame update
     void Start()
     {
+        deathTimer = 0;
         centerObject = GameObject.FindGameObjectWithTag("center");
         sequenceController = GameObject.FindGameObjectWithTag("seqController");
         clicked = false;
@@ -46,6 +52,9 @@ public class thoughtMovement : MonoBehaviour
         int lenthoughtClips = thoughtClips.Length;
         int randThoughtVal = Random.Range(0, lenthoughtClips - 1);
         mainClip = thoughtClips[randThoughtVal];
+
+        int randFroze = Random.Range(0, frozenSounds.Length - 1);
+        frozenSound = frozenSounds[randFroze];
     }
 
     // Update is called once per frame
@@ -85,11 +94,8 @@ public class thoughtMovement : MonoBehaviour
                 {
                     cooldown = false;
                     anim.SetBool("ReAnim", true);
+                    cooldownTimer = 0f;
                 }
-            }
-            else
-            {
-                cooldownTimer = 0;
             }
 
             //Click functionality
@@ -98,6 +104,7 @@ public class thoughtMovement : MonoBehaviour
                 if (!thoughtPlayed)
                 {
                     GetComponent<AudioSource>().PlayOneShot(mainClip);
+                    GetComponent<AudioSource>().PlayOneShot(frozenSound);
                     thoughtPlayed = true;
                 }
                 if (!cooldown)
@@ -115,13 +122,13 @@ public class thoughtMovement : MonoBehaviour
                     float bOfRGB = GetComponent<SpriteRenderer>().color.b;
                     float bOfClickedRGB = transitionVal.b;
                     bOfRGB = Mathf.Lerp(bOfRGB, bOfClickedRGB, Time.deltaTime);
+                    GetComponent<SpriteRenderer>().color = new Color(rOfRGB, gOfRGB, bOfRGB);
 
-                    
 
                     freezeTimer += Time.deltaTime;
                     anim.SetBool("isClicked", true);
                     anim.SetBool("ReAnim", false);
-                    if (freezeTimer > 2)
+                    if (freezeTimer > 3.5f)
                     {
                         clicked = false;
                         cooldown = true;
@@ -134,10 +141,6 @@ public class thoughtMovement : MonoBehaviour
                     clicked = false;
                     
                 }
-
-                //IF THOUGHT IS IN INTRO SEQUENCE
-                
-
             }
             else
             {
@@ -173,13 +176,25 @@ public class thoughtMovement : MonoBehaviour
         }
 
         transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
+        //kill sequence
+        if (anim.GetBool("isDead"))
+        {
+            deathTimer += Time.deltaTime;
+        }
+        if(deathTimer > 2)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
         if(other.gameObject.tag == "blastRing")
         {
-            Destroy(gameObject);
+            if (anim.GetBool("isClicked"))
+            {
+                anim.SetBool("isDead", true);
+            }
         }
     }
     

@@ -18,6 +18,11 @@ public class breathScript : MonoBehaviour
     [SerializeField] GameObject perfectExhale;
     [SerializeField] GameObject performanceCollector;
 
+    [SerializeField] GameObject missText;
+    [SerializeField] GameObject okayText;
+    [SerializeField] GameObject badText;
+    [SerializeField] GameObject perfectText;
+
     float rateOfChange_Inhale;
     float rateOfChange_InhaleDelta;
     float rateOfChange_Exhale;
@@ -26,6 +31,8 @@ public class breathScript : MonoBehaviour
     public bool perfectBreathBegin;
     public int perfectBreathCount;
     public bool perfectBreathComplete;
+
+    public bool gameStart;
 
     public bool blastBegin;
     public bool blastSequenceComplete;
@@ -49,6 +56,7 @@ public class breathScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameStart = false;
         //Declare starting Variables
         baseIncrement = 1f;
         FOVincrement = 0f;
@@ -136,6 +144,7 @@ public class breathScript : MonoBehaviour
             {
                 //Sound stuff for breath release
                 Debug.Log("Perfect BREATH");
+                Instantiate(perfectText);
                 audioSrc.volume = 1f;
                 audioSrc.clip = breath2;
                 audioSrc.Play();

@@ -254,14 +254,14 @@ public class sequenceController : MonoBehaviour
                 thoughtSequenceClicked = false;
                 thoughtSequencetimer = 0f;
                 
-                if(thoughtSequenceTimesClicked == 2)
+                if(thoughtSequenceTimesClicked == 3)
                 {
                     thoughtSequenceComplete = true;
                     pauseTime = false;
                 }
                 else
                 {
-                    audSrc.PlayOneShot(VO7a);
+                    //audSrc.PlayOneShot(VO7a);
                     GameObject tempThought = Instantiate(thoughtObject);
                     tempThought.transform.position = new Vector3(19f, Random.Range(-2f, 2f), 0f);
                     tempThought.GetComponent<thoughtMovement>().thoughtInSequence = true;
@@ -308,8 +308,15 @@ public class sequenceController : MonoBehaviour
             playVO11 = true;
         }
 
+        if (timer > 135)
+        {
+            //audSrc.volume = 1;
+            thoughtSpawner.SetActive(true);
+            gameObject.SetActive(false);
+            mainCam.GetComponent<breathScript>().gameStart = true;
+        }
 
-        
+
         if (end)
         {
             Debug.Log("Going");
