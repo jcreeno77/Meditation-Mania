@@ -9,18 +9,26 @@ public class thoughtMovement : MonoBehaviour
     [SerializeField] GameObject sequenceController;
     [SerializeField] float baseScale;
     [SerializeField] float clickedScale;
+
+    [SerializeField] AudioClip[] thoughtClips;
+    AudioClip mainClip;
+    bool thoughtPlayed = false;
+    
     GameObject holdCube;
     public bool clicked;
     public bool cooldown = false;
 
     public bool thoughtInSequence = false;
-
-    float cooldownTimer;
+    private Color[] colorListThot;
+    private float cooldownTimer;
     private float freezeTimer;
     Vector3 mainDirection;
     bool inside = false;
     bool firstClick = false;
     Animator anim;
+    private Color mainVal;
+    private Color transitionVal = new Color(155f/255f,114f / 255f, 242f / 255f);
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -28,6 +36,16 @@ public class thoughtMovement : MonoBehaviour
         sequenceController = GameObject.FindGameObjectWithTag("seqController");
         clicked = false;
         anim = GetComponent<Animator>();
+
+        colorListThot = new Color[3]{new Color(242f/255f,116f / 255f, 5f / 255f), new Color(242f / 255f, 159f / 255f, 5f / 255f), new Color(242f / 255f, 183f / 255f, 5f / 255f)};
+        int randVal = Random.Range(0, 2);
+        mainVal = colorListThot[randVal];
+        GetComponent<SpriteRenderer>().color = mainVal;
+
+        //chooses thought soundclip
+        int lenthoughtClips = thoughtClips.Length;
+        int randThoughtVal = Random.Range(0, lenthoughtClips - 1);
+        mainClip = thoughtClips[randThoughtVal];
     }
 
     // Update is called once per frame
@@ -77,12 +95,29 @@ public class thoughtMovement : MonoBehaviour
             //Click functionality
             if (clicked)
             {
-                Debug.Log("clicked");
+                if (!thoughtPlayed)
+                {
+                    GetComponent<AudioSource>().PlayOneShot(mainClip);
+                    thoughtPlayed = true;
+                }
                 if (!cooldown)
                 {
                     //Put all clicked code here
-                    float currentScale = Mathf.Lerp(transform.localScale.x, clickedScale, Time.deltaTime*2);
-                    transform.localScale = new Vector3(currentScale, currentScale, currentScale);
+                    //float currentScale = Mathf.Lerp(transform.localScale.x, clickedScale, Time.deltaTime*2);
+                    //transform.localScale = new Vector3(currentScale, currentScale, currentScale);
+                    //TRANSITION COLOR
+                    float rOfRGB = GetComponent<SpriteRenderer>().color.r;
+                    float rOfClickedRGB = transitionVal.r;
+                    rOfRGB = Mathf.Lerp(rOfRGB, rOfClickedRGB, Time.deltaTime);
+                    float gOfRGB = GetComponent<SpriteRenderer>().color.g;
+                    float gOfClickedRGB = transitionVal.g;
+                    gOfRGB = Mathf.Lerp(gOfRGB, gOfClickedRGB, Time.deltaTime);
+                    float bOfRGB = GetComponent<SpriteRenderer>().color.b;
+                    float bOfClickedRGB = transitionVal.b;
+                    bOfRGB = Mathf.Lerp(bOfRGB, bOfClickedRGB, Time.deltaTime);
+
+                    
+
                     freezeTimer += Time.deltaTime;
                     anim.SetBool("isClicked", true);
                     anim.SetBool("ReAnim", false);
@@ -108,12 +143,25 @@ public class thoughtMovement : MonoBehaviour
             {
                 anim.SetBool("ReAnim", true);
                 anim.SetBool("isClicked", false);
-                float currentScale = transform.localScale.x;
-                currentScale = Mathf.Lerp(currentScale, baseScale, Time.deltaTime*2);
-                transform.localScale = new Vector3(currentScale, currentScale, currentScale);
+                //float currentScale = transform.localScale.x;
+                //currentScale = Mathf.Lerp(currentScale, baseScale, Time.deltaTime*2);
+                //transform.localScale = new Vector3(currentScale, currentScale, currentScale);
+                //TRANSITION COLOR
+                float rOfRGB = GetComponent<SpriteRenderer>().color.r;
+                float rOfmainVal = mainVal.r;
+                rOfRGB = Mathf.Lerp(rOfRGB, rOfmainVal, Time.deltaTime);
+                float gOfRGB = GetComponent<SpriteRenderer>().color.g;
+                float gOfmainVal = mainVal.g;
+                gOfRGB = Mathf.Lerp(gOfRGB, gOfmainVal, Time.deltaTime);
+                float bOfRGB = GetComponent<SpriteRenderer>().color.b;
+                float bOfmainVal = mainVal.b;
+                bOfRGB = Mathf.Lerp(bOfRGB, bOfmainVal, Time.deltaTime);
+                GetComponent<SpriteRenderer>().color = new Color(rOfRGB, gOfRGB, bOfRGB);
                 mainDirection = transform.position - centerObject.transform.position;
                 transform.position -= mainDirection * Time.deltaTime * .1f;
                 freezeTimer = 0;
+
+                thoughtPlayed = false;
             }
 
         }
@@ -127,14 +175,15 @@ public class thoughtMovement : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider other)
     {
-        if(collision.gameObject.tag == "blastRing")
+        if(other.gameObject.tag == "blastRing")
         {
             Destroy(gameObject);
         }
     }
-
     
+
+
 
 }

@@ -28,6 +28,7 @@ public class sequenceController : MonoBehaviour
     [SerializeField] AudioClip VO8a;
     [SerializeField] AudioClip VO8b;
     [SerializeField] AudioClip VO8c;
+    [SerializeField] AudioClip VO11;
 
     [SerializeField] AudioClip menuMusic;
 
@@ -54,6 +55,7 @@ public class sequenceController : MonoBehaviour
     bool playVO8a;
     bool playVO8b;
     bool playVO8c;
+    bool playVO11;
 
     bool menumusicPlay;
 
@@ -172,20 +174,20 @@ public class sequenceController : MonoBehaviour
             playVO2c = true;
         }
 
-        if (timer > 31 && !playVO2d)
+        if (timer > 32 && !playVO2d)
         {
             audSrc.PlayOneShot(VO2d);
             playVO2d = true;
         }
 
-        if (timer > 41 && !playVO3a)
+        if (timer > 43 && !playVO3a)
         {
             audSrc.PlayOneShot(VO3);
             playVO3a = true;
 
         }
         //BreathIn BreathOut
-        if (timer > 74 && !playVO4a)
+        if (timer > 75 && !playVO4a)
         {
             audSrc.PlayOneShot(VO4a);
             playVO4a = true;
@@ -252,7 +254,7 @@ public class sequenceController : MonoBehaviour
                 thoughtSequenceClicked = false;
                 thoughtSequencetimer = 0f;
                 
-                if(thoughtSequenceTimesClicked == 3)
+                if(thoughtSequenceTimesClicked == 2)
                 {
                     thoughtSequenceComplete = true;
                     pauseTime = false;
@@ -267,7 +269,6 @@ public class sequenceController : MonoBehaviour
                 thoughtSequenceTimesClicked++;
 
             }
-
         }
 
         if(timer > 112 && !playVO8a)
@@ -289,7 +290,7 @@ public class sequenceController : MonoBehaviour
         if(timer > 128 && pauseTime && blastSequenceBegin)
         {
             blastSequencetimer += Time.deltaTime;
-            if(blastSequencetimer > 6)
+            if(blastSequencetimer > 13)
             {
                 audSrc.PlayOneShot(VO8b);
                 blastSequencetimer = 0;
@@ -299,6 +300,12 @@ public class sequenceController : MonoBehaviour
                 blastSequenceBegin = false;
                 pauseTime = false;
             }
+        }
+
+        if(timer>129 && !playVO11)
+        {
+            audSrc.PlayOneShot(VO11);
+            playVO11 = true;
         }
 
 

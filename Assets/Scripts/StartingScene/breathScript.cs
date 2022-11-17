@@ -43,6 +43,7 @@ public class breathScript : MonoBehaviour
     [SerializeField] AudioClip perfectBrthTryAgain;
     [SerializeField] AudioSource audioSrc;
     [SerializeField] AudioSource audioSrc2;
+    [SerializeField] GameObject sequenceController;
 
 
     // Start is called before the first frame update
@@ -97,7 +98,7 @@ public class breathScript : MonoBehaviour
             //audioSrc.Play();
             audioSrc2.clip = inhaleSound;
             audioSrc2.Play();
-
+            
 
         }
         else if (Input.GetKeyDown(KeyCode.Space))
@@ -120,6 +121,7 @@ public class breathScript : MonoBehaviour
                 {
                     audioSrc.clip = perfectBrthTryAgain;
                     audioSrc.Play();
+                    sequenceController.GetComponent<AudioSource>().Stop();
                 }
                 else
                 {
@@ -146,17 +148,18 @@ public class breathScript : MonoBehaviour
 
                 performanceCollector.GetComponent<performanceCollector>().perfectBreaths += 1;
 
-                if(blastBegin)
-                {
-                    Instantiate(blastCircle);
-                    blastBegin = false;
-                    blastSequenceComplete = true;
-                }
                 if (blastSequenceComplete)
                 {
                     Instantiate(blastCircle);
 
                 }
+                if (blastBegin)
+                {
+                    Instantiate(blastCircle);
+                    blastBegin = false;
+                    blastSequenceComplete = true;
+                }
+                
 
                 //Action stuff for breath release
                 breathReleased = true;
@@ -169,6 +172,7 @@ public class breathScript : MonoBehaviour
                     audioSrc.volume = 1f;
                     audioSrc.clip = perfectBrthTryAgain;
                     audioSrc.Play();
+                    sequenceController.GetComponent<AudioSource>().Stop();
                 }
                 else
                 {
@@ -189,6 +193,7 @@ public class breathScript : MonoBehaviour
                 {
                     audioSrc.clip = perfectBrthTryAgain;
                     audioSrc.Play();
+                    sequenceController.GetComponent<AudioSource>().Stop();
                 }
                 else
                 {

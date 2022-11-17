@@ -50,10 +50,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   centerObject: {fileID: 0}
   placeHoldCube: {fileID: 5873193402086134964, guid: 276dfd680c36c7c48a2024ca01d1b806, type: 3}
+  sequenceController: {fileID: 0}
   baseScale: 0.237
   clickedScale: 1
+  thoughtClips:
+  - {fileID: 8300000, guid: dc4aa2154f174ec4db41ffbd871c434f, type: 3}
+  - {fileID: 8300000, guid: b0656857e7da3f9488161cc5a72be4de, type: 3}
+  - {fileID: 8300000, guid: ecccb8a76006435478113c19ed236792, type: 3}
+  - {fileID: 8300000, guid: 036bd44dfb2e95d47a441e9e8dd06871, type: 3}
+  - {fileID: 8300000, guid: b4a107c15fff5d34db7fbad03f72b180, type: 3}
+  - {fileID: 8300000, guid: f3b2c8da17cae744bad63c5a60e7d225, type: 3}
+  - {fileID: 8300000, guid: 5e4f9280261468142b5052b10b586333, type: 3}
+  - {fileID: 8300000, guid: 605fff2147ec8034caa1a04c75127050, type: 3}
+  - {fileID: 8300000, guid: 49b27d52cb5c68640b3779ce6bb1ce20, type: 3}
+  - {fileID: 8300000, guid: 3023386ecf8d78b4bad805a8dc4eb186, type: 3}
+  - {fileID: 8300000, guid: 0fef5f3611fbe74429d3385484cba55c, type: 3}
+  - {fileID: 8300000, guid: 0fdb0d10e4cf12f45abf9a0fc07223e5, type: 3}
+  - {fileID: 8300000, guid: c6018cc2001243646ba84b38019f8720, type: 3}
+  - {fileID: 8300000, guid: 482e566b3340b944fa66f3702a506831, type: 3}
+  - {fileID: 8300000, guid: 59cbabe9a2c021c4cbbc63583a26cde0, type: 3}
+  - {fileID: 8300000, guid: 31bc2b1cb3762a64b9002f29136a2a1d, type: 3}
+  - {fileID: 8300000, guid: c96a1fecb4d08bb41a4449fabb2587d9, type: 3}
+  - {fileID: 8300000, guid: 38a58b45e0cf2ff4dadc651917c16155, type: 3}
+  - {fileID: 8300000, guid: fe0ea96bb287f774b935c7b3e8ff47af, type: 3}
+  - {fileID: 8300000, guid: f3a99477e804eb34390959bd11302c01, type: 3}
+  - {fileID: 8300000, guid: 12177a126be7eb64dbfbec1bf348b2d9, type: 3}
+  - {fileID: 8300000, guid: d873192f0a0f115409069942a6b0ea1c, type: 3}
+  - {fileID: 8300000, guid: 29463b1cfd10d0b4490a1871e6c4b219, type: 3}
+  - {fileID: 8300000, guid: 469786585b3237d40b1d98f1bb1965bd, type: 3}
+  - {fileID: 8300000, guid: 6500446d118fbc247a27265ce9120f29, type: 3}
+  - {fileID: 8300000, guid: b1063f5fed5842e47b21c0a58452a188, type: 3}
+  - {fileID: 8300000, guid: cc2c5e527c2e7264ca9dcd88a4db7fb9, type: 3}
+  - {fileID: 8300000, guid: bd86d03bd13c9db43a3d62cc2f24b241, type: 3}
+  - {fileID: 8300000, guid: a3a2508a24c8a5446a2c918cd38fd2d1, type: 3}
+  - {fileID: 8300000, guid: 55c6d6bcbe705fa489668813dee26f79, type: 3}
+  - {fileID: 8300000, guid: 975c6157fba032b4096562ee9297a8bd, type: 3}
+  - {fileID: 8300000, guid: c673d6c85c3a5234ca56b2875a5fe9eb, type: 3}
+  - {fileID: 8300000, guid: b17e615ca5ef7bc43bbf9e66440ef6bc, type: 3}
+  - {fileID: 8300000, guid: b1092a8deee7e56459d50a2df3092df0, type: 3}
+  - {fileID: 8300000, guid: 7ae380b4dea198c4c9ef6669684d806d, type: 3}
+  - {fileID: 8300000, guid: 557cd61c52e015641bbec7f2f7863ef9, type: 3}
+  - {fileID: 8300000, guid: b02bbde948a087146b90ba8e6278128a, type: 3}
+  - {fileID: 8300000, guid: 6d8490ded4fa58b41b02e28126b91122, type: 3}
+  - {fileID: 8300000, guid: 06de38beced5a654389b9f7b9ce7d237, type: 3}
+  - {fileID: 8300000, guid: 13ff8f955ddf5e445adc55ee0ab56a64, type: 3}
   clicked: 0
-  freezeTimer: 0
+  cooldown: 0
+  thoughtInSequence: 0
 --- !u!212 &4484800879988279024
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -96,7 +139,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9dfaf4e610225004bb2b4f7e2f2a6732, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8113208, g: 0.39417946, b: 0.39417946, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -134,7 +177,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4484800879988279030}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 5.0908365, y: 4.0744343, z: 2.8933628}
