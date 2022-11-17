@@ -2545,7 +2545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCam: {fileID: 1820967795}
-  VO1a: {fileID: 8300000, guid: d686b0deca6e75146a86cb1b0f7695b5, type: 3}
+  VO1a: {fileID: 8300000, guid: f6465221b12823d489df9190114ed34e, type: 3}
   VO2a: {fileID: 8300000, guid: 9fadb5e09d3be7d4fb154d0e93920350, type: 3}
   VO2b: {fileID: 8300000, guid: 0e5c6120c98e4be44a90f2353e6361c1, type: 3}
   VO2c: {fileID: 8300000, guid: 54f2aafc465eae4479775d66ff7fefcf, type: 3}

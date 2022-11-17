@@ -127,12 +127,14 @@ public class thoughtMovement : MonoBehaviour
         transform.position = new Vector3(transform.position.x, transform.position.y, -0.5f);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
         if(collision.gameObject.tag == "blastRing")
         {
             Destroy(gameObject);
         }
     }
+
+    
 
 }
