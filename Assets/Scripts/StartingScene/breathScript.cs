@@ -139,12 +139,17 @@ public class breathScript : MonoBehaviour
                     Debug.Log("BREATH MISS");
                     audioSrc.clip = badBreath;
                     audioSrc.Play();
-                    Instantiate(missText);
+                    if (gameStart)
+                    {
+                        Instantiate(missText);
+                    }
+                    
                 }
                 performanceCollector.GetComponent<performanceCollector>().missedBreaths += 1;
                 performanceCollector.GetComponent<performanceCollector>().currentCombo = 1;
 
             }
+
             else if (FOVincrement >= 3.37 && FOVincrement <= 3.45)
             {
                 //Sound stuff for breath release
@@ -199,7 +204,11 @@ public class breathScript : MonoBehaviour
                     audioSrc2.clip = goodBreath;
                     audioSrc2.Play();
                     breathReleased = true;
-                    Instantiate(okayText);
+                    if (gameStart)
+                    {
+                        Instantiate(okayText);
+                    }
+                        
                     if (blastSequenceComplete)
                     {
                         Instantiate(blastCircle);
@@ -222,7 +231,11 @@ public class breathScript : MonoBehaviour
                     Debug.Log("BAD BREATH (Stinky!)");
                     audioSrc.clip = badBreath;
                     audioSrc.Play();
-                    Instantiate(badText);
+                    if (gameStart)
+                    {
+                        Instantiate(badText);
+                    }
+                    
                     
                 }
                 performanceCollector.GetComponent<performanceCollector>().missedBreaths += 1;

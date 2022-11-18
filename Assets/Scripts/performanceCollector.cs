@@ -37,6 +37,12 @@ public class performanceCollector : MonoBehaviour
     [SerializeField] GameObject totalScoreObj;
     [SerializeField] GameObject timeObj;
 
+    [SerializeField] GameObject circleFill;
+    [SerializeField] GameObject circleFill1;
+    [SerializeField] GameObject circleFill2;
+    [SerializeField] GameObject circleFill3;
+    [SerializeField] GameObject circleOutline;
+
     public int currentCombo;
     public int currentTotalScore;
     [SerializeField] GameObject currentComboText;
@@ -129,6 +135,12 @@ public class performanceCollector : MonoBehaviour
             releasedThoughtsObj.GetComponent<TextMeshProUGUI>().color = new Color(29f / 255f, 104f / 255f, 168f / 255f, gradeScreenAlpha);
             totalScoreObj.GetComponent<TextMeshProUGUI>().color = new Color(29f / 255f, 104f / 255f, 168f / 255f, gradeScreenAlpha);
             timeObj.GetComponent<TextMeshProUGUI>().color = new Color(29f / 255f, 104f / 255f, 168f / 255f, gradeScreenAlpha);
+
+            circleFill.SetActive(false);
+            circleFill1.SetActive(false);
+            circleFill2.SetActive(false);
+            circleFill3.SetActive(false);
+            circleOutline.SetActive(false);
             
             //disable breathscript
             mainCam.GetComponent<breathScript>().enabled = false;
