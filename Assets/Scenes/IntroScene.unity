@@ -4884,10 +4884,10 @@ MonoBehaviour:
   breath1: {fileID: 8300000, guid: 4169cb57e9d7a1540849876474faee41, type: 3}
   inhaleSound: {fileID: 8300000, guid: cd40ab5af620aba4b82d7573ef9db31b, type: 3}
   breath2: {fileID: 8300000, guid: 6d9a879fe64146d45b7084c8cd7d9bcb, type: 3}
-  badBreath: {fileID: 8300000, guid: d59bd91f34fdf564c9a818fdadd6bd57, type: 3}
+  badBreath: {fileID: 8300000, guid: c90810d1910b2a6409465c8d6119999a, type: 3}
   perfectBreath: {fileID: 8300000, guid: 6e169e9fa6a589c46ae16e21d65c275b, type: 3}
-  goodBreath: {fileID: 0}
-  missBreath: {fileID: 0}
+  goodBreath: {fileID: 8300000, guid: e1741c2c3520ff246b3c338befe76b2d, type: 3}
+  missBreath: {fileID: 8300000, guid: 9496cd597d2b38049b205150c27b00e6, type: 3}
   introBrthCircSnd: {fileID: 8300000, guid: 5b2927b398c0a1f49a9365713d61530c, type: 3}
   perfectBrthTryAgain: {fileID: 8300000, guid: 7c3d7b7ccbd572a4e8b825ca42b538b0, type: 3}
   audioSrc: {fileID: 1820967799}
@@ -5550,6 +5550,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2024537751}
   - component: {fileID: 2024537752}
+  - component: {fileID: 2024537753}
   m_Layer: 0
   m_Name: B_00014
   m_TagString: Untagged
@@ -5624,6 +5625,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &2024537753
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024537750}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7ab89ff8dabb57d4596167d92d61ff57, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &2088514515
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,12 @@ public class trackMousePosition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //close game
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         Vector3 mousePos = Input.mousePosition;
         Ray ray = gameObject.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;

@@ -26,6 +26,8 @@ public class thoughtMovement : MonoBehaviour
     private Color[] colorListThot;
     private float cooldownTimer;
     private float freezeTimer;
+    private float freezeTimerLimit;
+    private float cooldownTimerLimit;
     Vector3 mainDirection;
     bool inside = false;
     bool firstClick = false;
@@ -39,6 +41,11 @@ public class thoughtMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Click timer limits
+        freezeTimerLimit = 5.8f;
+        cooldownTimerLimit = 6.3f;
+
+
         performanceCollector = GameObject.FindGameObjectWithTag("perfCollector");
         deathTimer = 0;
         centerObject = GameObject.FindGameObjectWithTag("center");
@@ -105,7 +112,7 @@ public class thoughtMovement : MonoBehaviour
             if (cooldown)
             {
                 cooldownTimer += Time.deltaTime;
-                if (cooldownTimer > 4f)
+                if (cooldownTimer > cooldownTimerLimit)
                 {
                     cooldown = false;
                     anim.SetBool("ReAnim", true);
@@ -143,7 +150,7 @@ public class thoughtMovement : MonoBehaviour
                 freezeTimer += Time.deltaTime;
                 anim.SetBool("isClicked", true);
                 anim.SetBool("ReAnim", false);
-                if (freezeTimer > 3.5f)
+                if (freezeTimer > freezeTimerLimit)
                 {
                     clicked = false;
                 }

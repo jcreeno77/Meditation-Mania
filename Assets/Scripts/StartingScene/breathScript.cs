@@ -137,13 +137,15 @@ public class breathScript : MonoBehaviour
                 else
                 {
                     Debug.Log("BREATH MISS");
-                    audioSrc.clip = badBreath;
-                    audioSrc.Play();
-                    if (gameStart)
-                    {
-                        Instantiate(missText);
-                    }
                     
+                    
+                    
+                }
+                if (gameStart)
+                {
+                    Instantiate(missText);
+                    audioSrc.clip = missBreath;
+                    audioSrc.Play();
                 }
                 performanceCollector.GetComponent<performanceCollector>().missedBreaths += 1;
                 performanceCollector.GetComponent<performanceCollector>().currentCombo = 1;
@@ -197,7 +199,7 @@ public class breathScript : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("OK BREATH");
+                    
                     audioSrc.volume = 1f;
                     audioSrc.clip = breath2;
                     audioSrc.Play();
