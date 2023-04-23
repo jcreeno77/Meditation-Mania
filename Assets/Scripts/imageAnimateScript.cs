@@ -18,7 +18,7 @@ public class imageAnimateScript : MonoBehaviour
     private void OnEnable()
     {
         image = GetComponent<Image>();
-        fps = 45f;
+        fps = 25f;
         index = 0;
         timer = 0;
     }
