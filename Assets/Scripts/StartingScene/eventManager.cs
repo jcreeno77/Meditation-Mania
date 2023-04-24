@@ -29,7 +29,7 @@ public class eventManager : MonoBehaviour
         {
             if (onTimerEnd != null && !activateBreath)
             {
-                Debug.Log("HIT!");
+                //Debug.Log("HIT!");
                 onTimerEnd();
                 activateBreath = true;
             }

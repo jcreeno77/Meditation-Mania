@@ -80,7 +80,7 @@ public class sequenceController : MonoBehaviour
     [SerializeField] GameObject thoughtObject;
     float selectBtnAlpha;
 
-    float timer;
+    public float timer;
     float thoughtSequencetimer = 0;
     float blastSequencetimer = 0;
     public bool thoughtSequenceClicked = false;
@@ -340,7 +340,7 @@ public class sequenceController : MonoBehaviour
         if (timer > 111 && end)
         {
             mainCam.GetComponent<breathScript>().enabled = false;
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
 
 

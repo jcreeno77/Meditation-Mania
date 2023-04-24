@@ -14,7 +14,7 @@ public class ThoughtSpawner : MonoBehaviour
     void Update()
     {
         timeLimit -= Time.deltaTime * rateOfTimeLimDecrease;
-        Debug.Log(timeLimit);
+        //Debug.Log(timeLimit);
         timer += Time.deltaTime;
         if (timer > timeLimit){
             timer = 0f;
