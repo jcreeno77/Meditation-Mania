@@ -8,6 +8,7 @@ TagManager:
   - center
   - seqController
   - blastRing
+  - perfCollector
   layers:
   - Default
   - TransparentFX

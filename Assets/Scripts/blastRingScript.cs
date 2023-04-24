@@ -5,10 +5,11 @@ using UnityEngine;
 public class blastRingScript : MonoBehaviour
 {
     float timer;
+    GameObject performanceCollector;
     // Start is called before the first frame update
     void Start()
     {
-        
+        performanceCollector = GameObject.FindGameObjectWithTag("perfCollector");
     }
 
     // Update is called once per frame

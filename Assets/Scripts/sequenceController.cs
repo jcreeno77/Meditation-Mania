@@ -28,6 +28,7 @@ public class sequenceController : MonoBehaviour
     [SerializeField] AudioClip VO8a;
     [SerializeField] AudioClip VO8b;
     [SerializeField] AudioClip VO8c;
+    [SerializeField] AudioClip VO11;
 
     [SerializeField] AudioClip menuMusic;
 
@@ -54,6 +55,7 @@ public class sequenceController : MonoBehaviour
     bool playVO8a;
     bool playVO8b;
     bool playVO8c;
+    bool playVO11;
 
     bool menumusicPlay;
 
@@ -97,11 +99,10 @@ public class sequenceController : MonoBehaviour
         audSrc.clip = VO1a;
         audSrc.Play();
         videoPlayer.GetComponent<AudioSource>().volume = Mathf.Lerp(videoPlayer.GetComponent<AudioSource>().volume, 0.2f, .01f);
-        
 
         //START SETTINGS
         //selBtn settings
-        timer = 0f;
+        timer = 65f;
         pauseTime = false;
         emotionSelected = false;
         breathInOut = false;
@@ -132,9 +133,7 @@ public class sequenceController : MonoBehaviour
         selectBtn2.GetComponent<Image>().color = new Color(1, 1, 1, selectBtnAlpha);
         selectBtn3.GetComponent<Image>().color = new Color(1, 1, 1, selectBtnAlpha);
 
-
-
-        if (timer > 7 && !emotionSelected)
+        if (timer > 5 && !emotionSelected)
         {
             pauseTime = true;
             selectBtnAlpha += Time.deltaTime;
@@ -145,12 +144,12 @@ public class sequenceController : MonoBehaviour
             selectBtn2.GetComponent<Button>().onClick.AddListener(EmotionSelected);
             selectBtn3.GetComponent<Button>().onClick.AddListener(EmotionSelected);
         }
-        if (emotionSelected && timer > 7f)
+        if (emotionSelected && timer > 6f)
         {
             selectBtnAlpha -= Time.deltaTime;
         }
 
-        if (timer > 8.2f && !playVO2a)
+        if (timer > 7f && !playVO2a)
         {
             selectBtn1.SetActive(false);
             selectBtn2.SetActive(false);
@@ -159,39 +158,39 @@ public class sequenceController : MonoBehaviour
             playVO2a = true;
         }
 
-        if (timer > 13f && !playVO2b)
+        if (timer > 11f && !playVO2b)
         {
             audSrc.PlayOneShot(VO2b);
             playVO2b = true;
         }
 
-        if (timer > 23 && !playVO2c)
+        if (timer > 16 && !playVO2c)
         {
             audSrc.PlayOneShot(VO2c);
             playVO2c = true;
         }
 
-        if (timer > 40 && !playVO2d)
+        if (timer > 32 && !playVO2d)
         {
             audSrc.PlayOneShot(VO2d);
             playVO2d = true;
         }
 
-        if (timer > 49 && !playVO3a)
+        if (timer > 43 && !playVO3a)
         {
             audSrc.PlayOneShot(VO3);
             playVO3a = true;
 
         }
         //BreathIn BreathOut
-        if (timer > 84 && !playVO4a)
+        if (timer > 75 && !playVO4a)
         {
             audSrc.PlayOneShot(VO4a);
             playVO4a = true;
             //pauseTime = true;
         }
 
-        if (timer > 105)
+        if (timer > 97)
         {
             //enables mainCam
             mainCam.GetComponent<breathScript>().enabled = true;
@@ -201,14 +200,14 @@ public class sequenceController : MonoBehaviour
             }
         }
 
-        if (timer > 106 && !playVO4b)
+        if (timer > 98 && !playVO4b)
         {
             audSrc.PlayOneShot(VO4b);
             playVO4b = true;
             pauseTime = true;
 
         }
-        if (timer > 106 && pauseTime && !perfectBreathComplete)
+        if (timer > 98 && pauseTime && !perfectBreathComplete)
         {
             mainCam.GetComponent<breathScript>().perfectBreathBegin = true;
             if (mainCam.GetComponent<breathScript>().perfectBreathComplete)
@@ -220,14 +219,14 @@ public class sequenceController : MonoBehaviour
             }
         }
 
-        if (timer > 108 && !playVO5)
+        if (timer > 99.5f && !playVO5)
         {
             audSrc.PlayOneShot(VO5);
             playVO5 = true;
 
         }
         
-        if (timer > 119 && !playVO6)
+        if (timer > 110 && !playVO6)
         {
             audSrc.PlayOneShot(VO6);
             playVO6 = true;
@@ -237,7 +236,7 @@ public class sequenceController : MonoBehaviour
             tempThought.GetComponent<thoughtMovement>().thoughtInSequence = true;
         }
         //THOUGHT SEQUENCE CODE
-        if (timer > 119 && pauseTime && !thoughtSequenceComplete)
+        if (timer > 110 && pauseTime && !thoughtSequenceComplete)
         {
             thoughtSequencetimer += Time.deltaTime;
 
@@ -250,7 +249,7 @@ public class sequenceController : MonoBehaviour
             {
                 thoughtSequenceClicked = false;
                 thoughtSequencetimer = 0f;
-                thoughtSequenceTimesClicked++;
+                
                 if(thoughtSequenceTimesClicked == 3)
                 {
                     thoughtSequenceComplete = true;
@@ -258,24 +257,24 @@ public class sequenceController : MonoBehaviour
                 }
                 else
                 {
-                    audSrc.PlayOneShot(VO7a);
+                    //audSrc.PlayOneShot(VO7a);
                     GameObject tempThought = Instantiate(thoughtObject);
                     tempThought.transform.position = new Vector3(19f, Random.Range(-2f, 2f), 0f);
                     tempThought.GetComponent<thoughtMovement>().thoughtInSequence = true;
                 }
-                
-            }
+                thoughtSequenceTimesClicked++;
 
+            }
         }
 
-        if(timer > 121 && !playVO8a)
+        if(timer > 112 && !playVO8a)
         {
             playVO8a = true;
             audSrc.PlayOneShot(VO8a);
             
         }
 
-        if(timer > 138 && !playVO8b)
+        if(timer > 128 && !playVO8b)
         {
             playVO8b = true;
             audSrc.PlayOneShot(VO8b);
@@ -284,10 +283,10 @@ public class sequenceController : MonoBehaviour
             blastSequenceBegin = true;
         }
 
-        if(pauseTime && blastSequenceBegin)
+        if(timer > 128 && pauseTime && blastSequenceBegin)
         {
             blastSequencetimer += Time.deltaTime;
-            if(blastSequencetimer > 6)
+            if(blastSequencetimer > 13)
             {
                 audSrc.PlayOneShot(VO8b);
                 blastSequencetimer = 0;
@@ -299,8 +298,21 @@ public class sequenceController : MonoBehaviour
             }
         }
 
+        if(timer>129 && !playVO11)
+        {
+            audSrc.PlayOneShot(VO11);
+            playVO11 = true;
+        }
 
-        
+        if (timer > 135)
+        {
+            //audSrc.volume = 1;
+            thoughtSpawner.SetActive(true);
+            gameObject.SetActive(false);
+            mainCam.GetComponent<breathScript>().gameStart = true;
+        }
+
+
         if (end)
         {
             Debug.Log("Going");
