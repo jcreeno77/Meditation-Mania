@@ -102,7 +102,7 @@ public class sequenceController : MonoBehaviour
 
         //START SETTINGS
         //selBtn settings
-        timer = 0f;
+        timer = 65f;
         pauseTime = false;
         emotionSelected = false;
         breathInOut = false;
