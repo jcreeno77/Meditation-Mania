@@ -59,6 +59,8 @@ public class sequenceController : MonoBehaviour
 
     bool menumusicPlay;
 
+    bool restarted;
+
     bool perfectBreathComplete;
     public bool perfectBreathBegin;
     bool breathInOut = false;
@@ -89,6 +91,11 @@ public class sequenceController : MonoBehaviour
     bool emotionSelected;
 
 
+    private void Start()
+    {
+        restarted = false;
+        emotionSelected = false;
+    }
     // Start is called before the first frame update
     private void OnEnable()
     {
@@ -102,9 +109,9 @@ public class sequenceController : MonoBehaviour
 
         //START SETTINGS
         //selBtn settings
-        timer = 65f;
+        timer = 0f;
         pauseTime = false;
-        emotionSelected = false;
+        
         breathInOut = false;
 
         selectBtnAlpha = 1f;
@@ -123,6 +130,7 @@ public class sequenceController : MonoBehaviour
         end = false;
         gradeScreenAlpha = 0f;
         menumusicPlay = false;
+        
     }
 
     // Update is called once per frame
@@ -339,7 +347,12 @@ public class sequenceController : MonoBehaviour
         }
         if (timer > 111 && end)
         {
-            mainCam.GetComponent<breathScript>().enabled = false;
+            if (!restarted)
+            {
+                restarted = true;
+                mainCam.GetComponent<breathScript>().enabled = false;
+            }
+            
             //gameObject.SetActive(false);
         }
 

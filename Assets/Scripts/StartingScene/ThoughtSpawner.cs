@@ -6,7 +6,7 @@ public class ThoughtSpawner : MonoBehaviour
 {
     float timer = 0f;
     [SerializeField] GameObject thought;
-    private float timeLimit = 6f;
+    public float timeLimit = 6f;
     private  float rateOfTimeLimDecrease = .03f;
     public float spawnSequence;
 

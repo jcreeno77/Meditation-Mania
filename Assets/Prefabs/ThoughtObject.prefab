@@ -95,9 +95,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 06de38beced5a654389b9f7b9ce7d237, type: 3}
   - {fileID: 8300000, guid: 13ff8f955ddf5e445adc55ee0ab56a64, type: 3}
   frozenSounds:
-  - {fileID: 8300000, guid: 6b0d86b7e0eec174b9bb69ffe0f4225d, type: 3}
-  - {fileID: 8300000, guid: 689b76faf223dba47b45faec5b31a876, type: 3}
-  - {fileID: 8300000, guid: 0123f178ea87f9f4f88c3899518753f3, type: 3}
+  - {fileID: 8300000, guid: cf60098a270722f4eb671af5cb8bf898, type: 3}
+  - {fileID: 8300000, guid: cf60098a270722f4eb671af5cb8bf898, type: 3}
+  - {fileID: 8300000, guid: cf60098a270722f4eb671af5cb8bf898, type: 3}
   clicked: 0
   cooldown: 0
   thoughtInSequence: 0
@@ -150,7 +150,7 @@ SpriteRenderer:
   m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &4484800879988279027

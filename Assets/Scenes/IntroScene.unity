@@ -2328,6 +2328,7 @@ GameObject:
   - component: {fileID: 740308425}
   - component: {fileID: 740308427}
   - component: {fileID: 740308426}
+  - component: {fileID: 740308428}
   m_Layer: 5
   m_Name: GradeScreen
   m_TagString: Untagged
@@ -2404,6 +2405,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740308424}
   m_CullTransparentMesh: 1
+--- !u!95 &740308428
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740308424}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b58e0a5be0cf4334f856680045ad6e81, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &794503405
 GameObject:
   m_ObjectHideFlags: 0
@@ -3395,6 +3416,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thought: {fileID: 4484800879988279030, guid: 1b008eede7b9ec34cbe1d246fd7a780e, type: 3}
+  timeLimit: 6
   spawnSequence: 0
 --- !u!4 &1167186012
 Transform:
@@ -4555,6 +4577,14 @@ MonoBehaviour:
   gradescreen: {fileID: 740308424}
   sequenceController: {fileID: 1003057173}
   perforanceCollector: {fileID: 1724407551}
+  mainCam: {fileID: 1820967795}
+  perfCollector: {fileID: 1724407551}
+  thoughtspawner: {fileID: 1167186010}
+  circleFill: {fileID: 1329771186}
+  circleFill1: {fileID: 253697934}
+  circleFill2: {fileID: 1896567932}
+  circleFill3: {fileID: 1839847481}
+  circleOutline: {fileID: 1444073982}
 --- !u!1 &1718785576
 GameObject:
   m_ObjectHideFlags: 0
